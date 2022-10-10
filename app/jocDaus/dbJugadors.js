@@ -33,6 +33,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 const { Sequelize, DataTypes } = require('sequelize');
 const mysql = require("mysql2");
+const { connection } = require('mongoose');
 
 
 
@@ -40,19 +41,50 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
+
+
+
+// TODO ! Conseguir que funcione el ASYN/AWAIT para que se cree la DB bien!
+//? https://devdotcode.com/how-to-use-sequelize-async-await-to-interact-with-mysql-database-in-node-js/
+// https://stackoverflow.com/questions/50906853/node-js-using-async-and-await-with-sequelize-orm
 // Open the connection to MySQL server
-const connection = mysql.createConnection({
+
+const connection = async(mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "1234",
-});
-
-// Run create database statement
-connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
-    console.log('Results:', results);
-    console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
-}
+})
+    .await((connection) => {
+        // Run create database statement
+        connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
+            console.log('Results:', results);
+            // console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
+        })
+    })
 );
+
+
+
+
+
+
+
+// // Open the connection to MySQL server
+// const connection = async (mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "1234",
+// }));
+
+// // Run create database statement
+// connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
+//     console.log('Results:', results);
+//     console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
+// }
+// ));
+
+
+
 
 // Run the Sequelize code to connect to the database 
 const sequelize = new Sequelize("dbJugadors", "root", "1234", {
@@ -86,7 +118,7 @@ sequelize.authenticate()
 
 
 
-    //  Definim model:
+//  Definim model:
 const dbJugadors = sequelize.define('Jugadors', {
     idJugador: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
     nomJugador: Sequelize.STRING,
