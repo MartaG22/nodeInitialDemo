@@ -26,7 +26,7 @@
 // GET /ranking/loser: retorna el jugador/a amb pitjor percentatge d’èxit.
 // GET /ranking/winner: retorna el jugador/a amb millor percentatge d’èxit.
 
-const db = require("./dbJugadors.js");
+const db = require("./NOdbJugadors.js");
 
 let dau1
 let dau2
@@ -162,7 +162,7 @@ dades.authenticate()
 'use strict';
 
 const express = require('express');
-const { dbJugadors, dbJugades } = require('./dbJugadors.js');
+const { dbJugadors, dbJugades } = require('./NOdbJugadors.js');
 const { Sequelize, and } = require("sequelize");
 // const { regex } = require("uuidv4");
 // // TODO Falta afegir base de dades de dbJugades!!!
