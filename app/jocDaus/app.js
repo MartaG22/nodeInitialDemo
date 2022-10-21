@@ -5,11 +5,15 @@
 // Al joc de daus s’hi juga amb dos daus de sis cares:
 
 // En cas que el resultat dels dos daus sigui 7 la partida es guanya, si no es perd.
-// Per poder jugar al joc t’has de registrar com a jugador/a amb un nom. Un jugador/a pot veure un llistat de totes les tirades que ha fet i el seu percentatge d’èxit.
-// Per poder realitzar una tirada, un usuari/ària s’ha de registrar amb un nom no repetit. Al ser creat, se li assigna un identificador únic i una data de registre.
+// Per poder jugar al joc t’has de registrar com a jugador/a amb un nom. 
+// Un jugador/a pot veure un llistat de totes les tirades que ha fet i el seu percentatge d’èxit.
+// Per poder realitzar una tirada, un usuari/ària s’ha de registrar amb un nom no repetit.
+// Al ser creat, se li assigna un identificador únic i una data de registre.
 // Si l’usuari/ària ho desitja, pot no afegir cap nom i es dirà “ANÒNIM”. Pot haver-hi més d’un jugador/a “ANÒNIM”.
-// Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. A més, pot saber el percentatge d’èxit de les tirades que ha fet.
-// No es pot eliminar una partida en concret, però sí que es pot eliminar tot el llistat de tirades d'un jugador/a. El software ha de permetre llistar tots els jugadors/es que hi ha al sistema, el percentatge d’èxit de cada jugador/a i el percentatge d’èxit mitjà de tots els jugadors/es en el sistema.
+// Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. 
+// A més, pot saber el percentatge d’èxit de les tirades que ha fet.
+// No es pot eliminar una partida en concret, però sí que es pot eliminar tot el llistat de tirades d'un jugador/a. 
+// El software ha de permetre llistar tots els jugadors/es que hi ha al sistema, el percentatge d’èxit de cada jugador/a i el percentatge d’èxit mitjà de tots els jugadors/es en el sistema.
 // El software ha de respectar els principals patrons de disseny.
 // Has de tenir en compte els següents detalls de construcció:
 // POST /players: crea un jugador/a.
@@ -22,13 +26,37 @@
 // GET /ranking/loser: retorna el jugador/a amb pitjor percentatge d’èxit.
 // GET /ranking/winner: retorna el jugador/a amb millor percentatge d’èxit.
 
-const Jugador = require("./jugadors.js");
+const db = require("./dbJugadors.js");
 
 let dau1
 let dau2
-let guanya = false;
+let resultatJugada = false;
 let tirades = 0;
 
+
+function tiroDaus() {
+    let tiradaDau1 = parseInt(Math.random() * 6 + 1);
+    let tiradaDau2 = parseInt(Math.random() * 6 + 1);
+    console.log("DAU 1:", tiradaDau1);
+    console.log("DAU 2:", tiradaDau2);
+    // let resultat = false;
+
+    ++tirades;
+    let sumaDados = tiradaDau1 + tiradaDau2;
+    console.log(sumaDados);
+    if (sumaDados == 7) {
+        resultatJugada = true;
+    } else {
+        resultatJugada = false;
+    }
+    console.log(tiradaDau1, tiradaDau2, resultatJugada);
+    return ({ tiradaDau1, tiradaDau2, resultatJugada });
+    // console.log(nombre)
+    console.log(tirades);
+};
+
+
+/*  // TODO SI LA FUNCIÓ DE DALT FUNCIONA, S'HA D'ESBORRAR AQUESTA QUE SEGUEIX!!!
 (function tiroDaus() {
     do {
         let tiradaDau1 = parseInt(Math.random() * 6 + 1);
@@ -49,14 +77,14 @@ let tirades = 0;
         // console.log(nombre)
     } while (!guanya);
     console.log(tirades);
-})();
+})(); */
 // tiroDaus();
 // console.log(guanya);
 
 
 
 
-//? CONNECTEM LA BASE DE DADES MYSQL:
+/* //? CONNECTEM LA BASE DE DADES MYSQL:
 // https://www.youtube.com/watch?v=3xiIOgYdbiE
 // https://morioh.com/p/c5b4a81d3da7
 
@@ -125,7 +153,7 @@ dades.authenticate()
     .catch(error => {
         console.log(`NO S'HA POGUT CONNECTAR AMB LA BASE DE DADES. \nERROR: ${error}`);
     })
-
+ */
 
 
 
@@ -134,6 +162,10 @@ dades.authenticate()
 'use strict';
 
 const express = require('express');
+const { dbJugadors, dbJugades } = require('./dbJugadors.js');
+const { Sequelize, and } = require("sequelize");
+// const { regex } = require("uuidv4");
+// // TODO Falta afegir base de dades de dbJugades!!!
 // const { Sequelize } = require("sequelize");
 // const bodyParser = require('body-parser');
 
@@ -141,77 +173,264 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
-const arrayJugadors = [];
+// const arrayJugadors = [];
+
+//! dbJugadors.js   <>   Jugador
+
+//! https://www.youtube.com/watch?v=CNZir1Jzry4   CONSULTAS A LA DATABASE
+//! https://www.facebook.com/groups/node.es/permalink/1518867341655227/?comment_id=1519233714951923
+//! https://maximorlov.com/6-common-sequelize-queries-rewritten-in-sql/  CONSULTAS BIEN EXPLICADO, COMPARANDO CONSULTA SEQUELIZE CON QUERIES MYSQL
+//? https://tutorialmarkdown.com/sintaxis   -->  README
+// https://www.youtube.com/watch?v=rUDn4ITQUFQ
+// https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/
 
 
-app.post(/players/, (req, res) => {
+
+app.post('/players', async (req, res) => {
     // Crear jugadors
 
-    // Aquesta part ha d'anar a contollers!!
-    let jugadorRegistrat = false;
-    let quantitatJugadors = arrayJugadors.length;
-    console.log("quantitat Jugadors:", quantitatJugadors)
+    //* ---- Aquesta part ha d'anar a contollers!!
+    // let jugadorRegistrat = false;
     console.log("Introdueix el nom del nou Jugador:");
-    console.log(req.body.nom);
+    console.log("jugador", req.body.nomJugador);
+    const nom = req.body.nomJugador;
+    console.log(nom)
 
-    
-    jugadorRegistrat = arrayJugadors.includes(req.body.nom) ? false : true;
-    console.log(jugadorRegistrat)
-    
-    //TODO  Passar el IF a TRY-CATCH:
-    if (jugadorRegistrat == false) {
-        // const nomNouJugador = req.body.nom;
-        const nouJugador = new Jugador(req.body.nom, quantitatJugadors);
-        console.log(nouJugador);
-        arrayJugadors.push(nouJugador);
-        console.log(arrayJugadors);
-        // return res.send.json;
-        return res.status(200).send(`Dades rebudes: \n NOU JUGADOR: ${nouJugador.nomJugador} \n ID: ${nouJugador.idJugador} \n DATA REGISTRE: ${nouJugador.dataRegistre}`);
 
+    if (!nom || nom == 'ANÒNIM') {
+        try {
+            const jugadorAnonim = await dbJugadors.create({
+                nomJugador: "ANÒNIM"
+            });
+            console.log("Jugador creat com a 'ANÒNIM'!");
+            res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
+
+        } catch (error) {
+            res.status(400).json(error);
+        }
     } else {
-        //TODO  No funciona la validació. Si existeix el jugador no dona l'error.
+        try {
+            const jugador = await dbJugadors.findOne({ where: { nomJugador: nom } });   // Validació per trobar si existeix un jugador amb el nom introduit
+            if (jugador) {
+                console.log("Aquest jugador ja existeix")
+                res.status(400).json({ "Error": "Aquest jugador ja existeix!" })
+            } else {
+                const jugador = await dbJugadors.create({
+                    nomJugador: nom,
+                });
 
-        res.status(400).end({
-            succes: false,
-            missatge: "Aquest jugador ja existeix!" 
+                console.log("Jugador creat amb èxit")
+                res.status(200).json(`S'ha creat el jugador: ${jugador.nomJugador}`);
+            };
+
+        } catch (error) {
+            res.status(400).send(error);
+        }
+    }
+});
+
+app.put('/players/:id', async (req, res) => {
+    // Modifica el nom dels jugadors
+
+    const id = req.params.id;
+
+    try {
+        const juadorAModificar = await dbJugadors.findOne({ where: { idJugador: id } });   // Validació per trobar si existeix un jugador amb el nom introduit
+        console.log(juadorAModificar);
+        const nouNomJugador = req.body.nomJugador;
+
+        if (juadorAModificar == null) {
+            try {
+                console.log("El valor de 'juador a modificar' és " + juadorAModificar); // NULL
+                res.status(400).json({ Error: "Aquest jugador no existeix!" });
+
+            } catch (error) {
+                res.status(400).send(error);
+            };
+
+        } else {
+            try {
+                const nomJugadorTrobat = juadorAModificar.nomJugador
+                console.log('idJugador:', juadorAModificar.idJugador, 'nomJugadorTrobat:', nomJugadorTrobat)
+                console.log('nouNomJugador:', nouNomJugador);
+
+                const nomJugadorRepetit = await dbJugadors.findOne({ where: { nomJugador: nouNomJugador } });   // Validació per trobar si existeix un jugador amb el nom introduit
+                console.log('nomJugadorRepetit:', nomJugadorRepetit);
+
+                if (nomJugadorRepetit && nouNomJugador != "") {
+                    console.log("Aquest jugador ja existeix. Introdueix un altre nom");
+                    res.status(400).json({ "Error": "Aquest jugador ja existeix!  Introdueix un altre nom!" });
+
+                } else if (nouNomJugador === "") {
+                    const jugadorAnonim = await juadorAModificar.update({ nomJugador: "ANÒNIM" });
+                    console.log("Jugador creat com a 'ANÒNIM'!");
+                    res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
+
+                } else {
+                    await juadorAModificar.update({ nomJugador: nouNomJugador });
+                    res.status(200).json(`Nom del jugador modificat amb èxit.  Nou nom:  ${juadorAModificar.nomJugador}`);
+
+                };
+
+            } catch (error) {
+                res.status(400).send(error);
+            };
+        };
+    } catch (error) {
+        res.status(400).send(error);
+    };
+});
+
+app.get('/players', (req, res) => {
+    // Retorna llitat dels jugadors
+
+    // TODO  Falta afegir el percentatge de jugades guanyades de cada jugador!
+    // TODO  Falta afegir el TRY-CATCH
+
+    dbJugadors.findAll({ attributes: ['nomJugador'] })
+        .then(jugador => {
+            const llistat = JSON.stringify(jugador);
+            console.log("llistat:", llistat);
+            res.send(llistat);
+        }).catch(error => {
+            console.log(error);
         })
+});
 
+
+
+
+
+app.post(`/games/:id`, async (req, res) => {
+    // Un jugador/a específic realitza una tirada.
+
+    console.log("Introdueix el ID d'un Jugador:");
+    console.log("jugador", req.params.id);
+    const id = req.params.id;
+    console.log(id);
+    try {
+        const jugadorTrobat = await dbJugadors.findOne({ where: { idJugador: id } });   // Validació per trobar si existeix un jugador amb el nom introduit
+        // console.log(idJugadorTirada, idJugadorTirada.nomJugador);
+
+        if (!jugadorTrobat) {
+            res.status(400).json({ Error: "Aquest jugador no existeix!" });
+
+        } else {
+            const tiradaDaus = tiroDaus();
+            console.log('tiradaDaus', tiradaDaus); // devuelve array del return
+            console.log(tiradaDaus.resultatJugada); // devuelve array del return
+
+            console.log("nomjugador", jugadorTrobat.nomJugador);
+            console.log("tirades jugador:", jugadorTrobat.tiradesJugador);
+
+            const tiradesPerJugador = ++jugadorTrobat.tiradesJugador;
+            await jugadorTrobat.update({ tiradesJugador: tiradesPerJugador });
+            await jugadorTrobat.update({})
+            const guardarTirada = await dbJugades.create(
+                {
+                    tiradaDau1: tiradaDaus.tiradaDau1,
+                    tiradaDau2: tiradaDaus.tiradaDau2,
+                    partidaGuanyada: tiradaDaus.resultatJugada,
+                    JugadorIdJugador: jugadorTrobat.idJugador
+                }
+            );
+            res.status(200).send(guardarTirada)
+        };
+
+    } catch (error) {
+        res.status(400).send(error);
     };
 });
 
 
 
 
+// Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. 
 
-app.put('/players/:id', (req, res) => {
-    // Modifica el nom dels jugadors
-});
-
-app.get(/players/, (req, res) => {
-    // Retorna llitat dels jugadors
-
-    // llistaJugadors.findAll({attributes: ["nomJugador", "dataRegistre"]});
-    // .then(jugadors => {
-    //     const llistat = JSON.stringify(jugadors);
-    //     console.log(llistat);
-    // }).catch(error => {
-    //     console.log(error);
-    // })
-
-});
-
-app.post(`/games/:id`, (req, res) => {
-    // Un jugador/a específic realitza una tirada.
-});
-
-app.delete(`/games/:id`, (req, res) => {
+app.delete(`/games/:id`, async (req, res) => {
     // elimina les tirades d'un jugador/a.
-});
 
-app.get(`/games/:id`, (req, res) => {
+    // console.log("Introdueix el ID d'un Jugador:");
+    // console.log("jugador", req.params.id);
+    const id = req.params.id;
+    // console.log(id);
+
+    try {
+        const dadesJugadorTrobat = await dbJugadors.findOne({ where: { idJugador: id } });   // Validació per trobar si existeix un jugador amb el nom introduit
+        console.log('***dadesJugadorTrobat:***', dadesJugadorTrobat);
+
+        if (dadesJugadorTrobat == null) {
+            console.log("El valor de l'ID introduit no existeix!");
+            res.status(400).json({ Error: "Aquest jugador no existeix!" });
+
+        } else {
+
+            const idJugadorTrobat = dadesJugadorTrobat.idJugador;
+            console.log('***idJugadorTrobat:***', idJugadorTrobat);
+
+            await dadesJugadorTrobat.update({ tiradesJugador: 0 });
+            const jugades = await dbJugades.destroy({ where: { JugadorIdJugador: idJugadorTrobat } });
+            // const jugades = await dbJugades.delete({ where: ( {JugadorIdJugador: idJugadorTrobat} and {partidaGuanyada: true})} });
+            console.log(jugades);
+            // const incialitzarJugades = await juadorAModificar.update({ tiradesJugador: 0 });
+
+
+            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
+            const missatge = `S'han esborrat amb èxit totes les jugades del jugador amb ID ${idJugadorTrobat}`;
+            res.status(200).send(dadesJugador + missatge);
+
+        }
+    } catch (error) {
+        res.status(400).send(error);
+    };
+    });
+
+
+app.get(`/games/:id`, async (req, res) => {
     // Retorna el llistat de jugades per un jugador/a.
+    //? Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. 
+    // TODO A més, pot saber el percentatge d’èxit de les tirades que ha fet.
+
+    // console.log("Introdueix el ID d'un Jugador:");
+    // console.log("jugador", req.params.id);
+    const id = req.params.id;
+    // console.log(id);
+
+    try {
+        const dadesJugadorTrobat = await dbJugadors.findOne({ where: { idJugador: id } });   // Validació per trobar si existeix un jugador amb el nom introduit
+        console.log('***dadesJugadorTrobat:***', dadesJugadorTrobat);
+
+        if (dadesJugadorTrobat == null) {
+            console.log("El valor de l'ID introduit no existeix!");
+            res.status(400).json({ Error: "Aquest jugador no existeix!" });
+
+        } else {
+            const idJugadorTrobat = dadesJugadorTrobat.idJugador;
+            console.log('***idJugadorTrobat:***', idJugadorTrobat);
+            const jugadesTotalsJugadorTrobat = dadesJugadorTrobat.tiradesJugador;   // TODO NECESITO AQUESTA DADA PER EXTREURE EL PERCENTATGE!
+
+            // console.log("id Jugador Trobat:", idJugadorTrobat);
+            console.log("jugador Trobat:", dadesJugadorTrobat.nomJugador);
+            // console.log("jugades Totals Jugador Trobat:", jugadesTotalsJugadorTrobat);
+
+
+            const jugades = await dbJugades.findAll({ where: { JugadorIdJugador: idJugadorTrobat } });
+            // console.log("length", jugades.length);
+            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
+            const missatge = "";
+            for (let i = 0; i < jugades.length; i++) {
+                let jugadaActual = jugades[i];
+                console.log(jugadaActual);
+                missatge += (`TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`);
+                console.log(missatge);
+            };
+            res.status(200).send(dadesJugador + missatge);
+        };
+    } catch (error) {
+        res.status(400).send(error);
+    };
 });
 
 app.get(/ranking/, (req, res) => {

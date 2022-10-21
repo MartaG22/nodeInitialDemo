@@ -26,14 +26,15 @@
 
 // https://sebhastian.com/sequelize-create-database/
 // https://www.tutorialspoint.com/creating-a-mysql-table-in-nodejs-using-sequelize
+// https://sebhastian.com/sequelize-foreign-key/   RELACIÓ ENTRE TAULES
+//? https://www.youtube.com/watch?v=J8oLwY5114c     EXPLICA LAS DIFERENTES RELACIONES ENTRE TABLAS!!!
 
 const express = require('express');
 const app = express();
 
-const port = process.env.PORT || 3001;
+// const port = process.env.PORT || 3001;
 const { Sequelize, DataTypes } = require('sequelize');
-const mysql = require("mysql2");
-const { connection } = require('mongoose');
+const mysql = require("mysql2/promise");
 
 
 
@@ -41,50 +42,53 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-
-
-
-// TODO ! Conseguir que funcione el ASYN/AWAIT para que se cree la DB bien!
-//? https://devdotcode.com/how-to-use-sequelize-async-await-to-interact-with-mysql-database-in-node-js/
-// https://stackoverflow.com/questions/50906853/node-js-using-async-and-await-with-sequelize-orm
 // Open the connection to MySQL server
+// https://www.npmjs.com/package/mysql2#using-promise-wrapper 
+async function connectionDB() {
+    try {
+        const connection = await mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "1234",
+        });
 
-const connection = async(mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1234",
-})
-    .await((connection) => {
         // Run create database statement
-        connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
+        await connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`), (err, results) => {
             console.log('Results:', results);
-            // console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
-        })
-    })
-);
+        }
+    }
+    catch (err) {
+        console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
+    }
+};
+
+// connectionDB();
 
 
 
+// try {
+//     await connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
+//         console.log('Results:', results);
+//     }) .catch (err) 
+//         console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
 
+// };
 
 
 
 // // Open the connection to MySQL server
-// const connection = async (mysql.createConnection({
+// const connection = mysql.createConnection({
 //     host: "localhost",
 //     user: "root",
 //     password: "1234",
-// }));
+// });
 
 // // Run create database statement
 // connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`, (err, results) => {
 //     console.log('Results:', results);
 //     console.log('Error:', err);   //SI NO SE PUEDE CREAR LA DB
 // }
-// ));
-
-
-
+// );
 
 // Run the Sequelize code to connect to the database 
 const sequelize = new Sequelize("dbJugadors", "root", "1234", {
@@ -94,19 +98,14 @@ const sequelize = new Sequelize("dbJugadors", "root", "1234", {
 
 
 
-// const  Jugador = sequelize.define('dbJugadors', {
-//     "id": {type: Sequelize.INTEGER, primaryKey: true},
-//     "postre": Sequelize.STRING,
-//     "calorias": Sequelize.INTEGER
-// })
 
 
-// module.exports = Jugador;
 
 // Close the connection
 // connection.end();
 
 sequelize.authenticate()
+connectionDB()
     .then(() => {
         console.log("CONEXIÓN A LA BASE DE DATOS OK");
     })
@@ -118,21 +117,45 @@ sequelize.authenticate()
 
 
 
-//  Definim model:
+//  Definim model  'JUGADORS':
 const dbJugadors = sequelize.define('Jugadors', {
     idJugador: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-    nomJugador: Sequelize.STRING,
-    dataRegistre: Sequelize.INTEGER
+    nomJugador: {
+        type: Sequelize.STRING, allowNull: false,
+        // validate: {
+        //     notNull: {
+        //         missatge: "Introdueix el teu nom:"
+        //     }   // allowNull   =>   És el mateix de NOT NULL de SQL. Obliga a introduir un valor al camp.
+        // }
+    },
+    tiradesJugador: { type: Sequelize.INTEGER, defaultValue: 0}
+    // dataRegistre: { type: Sequelize.DATE }
 });
 
+
+
+const dbJugades = sequelize.define('Jugades', {
+    idJugada: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    tiradaDau1: { type: Sequelize.INTEGER },
+    tiradaDau2: { type: Sequelize.INTEGER },
+    // partidaGuanyada: { type: Sequelize.INTEGER},
+    partidaGuanyada: { type: Sequelize.BOOLEAN},
+});
+
+
+dbJugades.belongsTo(dbJugadors);   //Associació entre taules!
+dbJugadors.hasMany(dbJugades);
+
+
+sequelize.sync()
 
 // console.log(dbjugadors[0]);
 
 // Creating all the tables defined in DB
-sequelize.sync();
 
 
+// app.listen(port, () => {
+//     console.log(`API REST inicialitzant en http://localhost: ${port}`)
+// });
 
-app.listen(port, () => {
-    console.log(`API REST inicialitzant en http://localhost: ${port}`)
-});
+module.exports = {dbJugadors, dbJugades};
