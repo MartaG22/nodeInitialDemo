@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
 app.get('/user', (req, res) => {
     res.send({ nomUsuari: `Marta Garijo`, edat: 48, url: 'http://localhost:3000/user' })
 });
@@ -153,6 +154,50 @@ app.post('/time', cors(corsOptions), (req, res) => {
         // return ("error");
     }
 });
+
+
+
+//! ---* <  NIVELL 3  ><  Exercici 1  > *---
+// Crea una petició GET a l'endpoint /pokemon/{id} que rebi un número de Pokémon, faci una cerca al Pokémon API i retorni el nom del Pokémon, la seva alçada i el seu pes.
+// ->Pokeapi
+
+// https://www.youtube.com/watch?v=9v5JVA0JVew      ===> Consulta a la pokeapi por nombre o por id de pokemon
+// https://www.youtube.com/watch?v=ydcm7GECaAI
+// https://attacomsian.com/blog/http-requests-axios   AXIOS!!!
+// https://www.youtube.com/watch?v=G-j5SI7Qitk
+// https://www.npmjs.com/package/node-fetch#installation
+
+
+
+const fetch = require('cross-fetch');
+
+
+app.get(("/pokemon/:id/"), async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+const url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+        try {
+          const pokemonTrobat = await fetch(url);
+          
+          if (res.status >= 400) {
+            throw new Error("Aquest POKEMON no està enregistrat!");
+          }
+          
+          const pokemon = await pokemonTrobat.json();
+        
+          const dadesPokemon = {"ID Pokemon": id, "nom Pokemon": pokemon.name, "alçada Pokemon": pokemon.height, "pes Pokemon": pokemon.weight};
+          console.log(dadesPokemon);
+          res.status(200).send(dadesPokemon);
+
+        } catch (error) {
+          return res.status(400).json({ error });
+
+        }
+      
+
+});
+
+
 
 
 app.listen(port, () => {
