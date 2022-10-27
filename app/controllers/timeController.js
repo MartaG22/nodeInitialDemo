@@ -4,8 +4,6 @@ const time = (req, res) => {
         console.log("nom:", req.body.nom);
 
         const usuariCorrecte = "Omar";
-        // const nomUsuari = req.body;
-        // const dataActual = new Date;
         const nomUsuari = req.body.nom;
         console.log("nomusuari", nomUsuari);
 
@@ -19,15 +17,12 @@ const time = (req, res) => {
                 hora: `${dataActual.getHours()}:${String(dataActual.getMinutes()).padStart(2, '0')}`
             });
             return res.send.json;
-            // res.json("Datos recibidos")
 
         } else {
-            // return ("error");
             res.status(400).json({
                 suceso: false,
                 missatge: "Usuari incorrecte"
             })
-            // return ("error");
         };
     } catch (error) {
         return res.status(400).json({ error: error.message });

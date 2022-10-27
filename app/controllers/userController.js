@@ -1,3 +1,5 @@
+// Nivell 1 - Exercici 1
+
 const user = (req, res) => {
     try {
         res.send({ nomUsuari: `Marta Garijo`, edat: 48, url: 'http://localhost:3000/user' })
@@ -7,21 +9,3 @@ const user = (req, res) => {
 };
 
 module.exports = user;
-
-
-// 'use strict';
-
-
-// routes:
-// //http://localhost:3000/user
-
-// const express = require('express');
-// //create object router
-// const router = express.Router();
-
-// const getUser = require('../controllers/user.js');
-
-// //endpoint to get user info
-// router.get('/user', getUser);
-
-// module.exports = router;
