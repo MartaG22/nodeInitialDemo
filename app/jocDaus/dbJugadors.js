@@ -128,8 +128,10 @@ const dbJugadors = sequelize.define('Jugadors', {
         //     }   // allowNull   =>   És el mateix de NOT NULL de SQL. Obliga a introduir un valor al camp.
         // }
     },
-    tiradesJugador: { type: Sequelize.INTEGER, defaultValue: 0}
+    tiradesJugador: { type: Sequelize.INTEGER, defaultValue: 0},
     // dataRegistre: { type: Sequelize.DATE }
+    tiradesGuanyades: { type: Sequelize.INTEGER, defaultValue: 0},
+    percentatgeExit: { type: Sequelize.INTEGER, defaultValue: 0}
 });
 
 

@@ -163,7 +163,7 @@ dades.authenticate()
 
 const express = require('express');
 const { dbJugadors, dbJugades } = require('./dbJugadors.js');
-const { Sequelize, and } = require("sequelize");
+// const { Sequelize } = require("sequelize");
 // const { regex } = require("uuidv4");
 // // TODO Falta afegir base de dades de dbJugades!!!
 // const { Sequelize } = require("sequelize");
@@ -198,7 +198,6 @@ app.post('/players', async (req, res) => {
     const nom = req.body.nomJugador;
     console.log(nom)
 
-
     if (!nom || nom == 'ANÒNIM') {
         try {
             const jugadorAnonim = await dbJugadors.create({
@@ -229,6 +228,7 @@ app.post('/players', async (req, res) => {
             res.status(400).send(error);
         }
     }
+
 });
 
 app.put('/players/:id', async (req, res) => {
@@ -283,20 +283,37 @@ app.put('/players/:id', async (req, res) => {
     };
 });
 
-app.get('/players', (req, res) => {
+app.get('/players', async(req, res) => {
     // Retorna llitat dels jugadors
 
-    // TODO  Falta afegir el percentatge de jugades guanyades de cada jugador!
-    // TODO  Falta afegir el TRY-CATCH
+    let missatge = "";
+    try {
+        const llistatJugadors = await dbJugadors.findAll({})
+        // const llistat = JSON.stringify(llistatJugadors);
+        // console.log("llistat:", llistat);
 
-    dbJugadors.findAll({ attributes: ['nomJugador'] })
-        .then(jugador => {
-            const llistat = JSON.stringify(jugador);
-            console.log("llistat:", llistat);
-            res.send(llistat);
-        }).catch(error => {
-            console.log(error);
-        })
+        llistatJugadors.forEach(jugador => {
+            missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit} % \n \n`
+            // console.log(missatge);
+        });
+        console.log(missatge)
+        res.status(200).send(missatge);
+    } catch (error) {
+        res.status(400).send(error);
+    };
+
+
+
+
+
+    // dbJugadors.findAll({ attributes: ['nomJugador'] })
+    //     .then(jugador => {
+    //         const llistat = JSON.stringify(jugador);
+    //         console.log("llistat:", llistat);
+    //         res.send(llistat);
+    //     }).catch(error => {
+    //         console.log(error);
+    //     })
 });
 
 
@@ -327,8 +344,12 @@ app.post(`/games/:id`, async (req, res) => {
 
             const tiradesPerJugador = ++jugadorTrobat.tiradesJugador;
             await jugadorTrobat.update({ tiradesJugador: tiradesPerJugador });
-            await jugadorTrobat.update({})
-            const guardarTirada = await dbJugades.create(
+            // await jugadorTrobat.update({})
+
+            // let percentatgeExit = 0;
+
+
+            await dbJugades.create(
                 {
                     tiradaDau1: tiradaDaus.tiradaDau1,
                     tiradaDau2: tiradaDaus.tiradaDau2,
@@ -336,7 +357,39 @@ app.post(`/games/:id`, async (req, res) => {
                     JugadorIdJugador: jugadorTrobat.idJugador
                 }
             );
-            res.status(200).send(guardarTirada)
+
+            console.log("HOLAAA", jugadorTrobat);
+            console.log("HOLAAAAAA", tiradaDaus);
+
+            // TODO  NO CALCULA BIEN EL PORCENTAJE. REVISARLO !!!!!!!!!!!!!!
+            let percentatgeExit = 0;
+            if (tiradaDaus.resultatJugada === true) {
+
+                console.log(`El jugador ${jugadorTrobat.nomJugador} ha guanyat!`)
+                // console.log("<<<<GUANYADES>>>>", jugadorTrobat.tiradesGuanyades)
+                await jugadorTrobat.update(
+                    {
+                        tiradesGuanyades: ++jugadorTrobat.tiradesGuanyades
+                    }
+                );
+
+                percentatgeExit = (jugadorTrobat.tiradesGuanyades * 100) / jugadorTrobat.tiradesPerJugador;
+                console.log(percentatgeExit)
+                await jugadorTrobat.update(
+                    {
+                        percentatgeExit: percentatgeExit
+                    }
+                )
+                // console.log("tirades Guanyades", tiradesGuanyades);
+                // console.log(guardarTirada)
+                // console.log("Percentatge actualitzat")
+            };
+
+            const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
+            const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
+            res.status(200).send(dadesJugador + missatge);
+
+            // res.status(200).send(guardarTirada)
         };
 
     } catch (error) {
@@ -371,6 +424,8 @@ app.delete(`/games/:id`, async (req, res) => {
             console.log('***idJugadorTrobat:***', idJugadorTrobat);
 
             await dadesJugadorTrobat.update({ tiradesJugador: 0 });
+            await dadesJugadorTrobat.update({ tiradesGuanyades: 0 });
+            await dadesJugadorTrobat.update({ percentatgeExit: 0 });
             const jugades = await dbJugades.destroy({ where: { JugadorIdJugador: idJugadorTrobat } });
             // const jugades = await dbJugades.delete({ where: ( {JugadorIdJugador: idJugadorTrobat} and {partidaGuanyada: true})} });
             console.log(jugades);
@@ -385,7 +440,7 @@ app.delete(`/games/:id`, async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     };
-    });
+});
 
 
 app.get(`/games/:id`, async (req, res) => {
@@ -410,31 +465,68 @@ app.get(`/games/:id`, async (req, res) => {
             const idJugadorTrobat = dadesJugadorTrobat.idJugador;
             console.log('***idJugadorTrobat:***', idJugadorTrobat);
             const jugadesTotalsJugadorTrobat = dadesJugadorTrobat.tiradesJugador;   // TODO NECESITO AQUESTA DADA PER EXTREURE EL PERCENTATGE!
-
+            console.log('***jugadesTotalsJugadorTrobat:***', jugadesTotalsJugadorTrobat);
             // console.log("id Jugador Trobat:", idJugadorTrobat);
             console.log("jugador Trobat:", dadesJugadorTrobat.nomJugador);
             // console.log("jugades Totals Jugador Trobat:", jugadesTotalsJugadorTrobat);
 
 
             const jugades = await dbJugades.findAll({ where: { JugadorIdJugador: idJugadorTrobat } });
-            // console.log("length", jugades.length);
-            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
-            const missatge = "";
+            // console.log("jugades", jugades);
+            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n`;
+            let missatgePercentatge = `Percentatge d'èxit: ${dadesJugadorTrobat.percentatgeExit}% \n \n`
+            //! let percentatgeExit = (dadesJugadorTrobat.tiradesGuanyades * 100)/dadesJugadorTrobat.tiradesJugador;
+            //! // await dbJugadors
+            let missatgeTirades = "";
+            // let missatgePercentatge = "";
             for (let i = 0; i < jugades.length; i++) {
                 let jugadaActual = jugades[i];
-                console.log(jugadaActual);
-                missatge += (`TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`);
-                console.log(missatge);
+                // console.log(jugadaActual);
+
+                // if (jugadaActual.partidaGuanyada === true) {
+                //     percentatgeExit= ++percentatgeExit;
+                // }
+                // console.log('percentatgeExit', percentatgeExit)
+                missatgeTirades += `TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`;
+
             };
-            res.status(200).send(dadesJugador + missatge);
+
+
+
+            res.status(200).send(dadesJugador + missatgePercentatge + missatgeTirades);
         };
     } catch (error) {
         res.status(400).send(error);
     };
 });
 
-app.get('/ranking/', (req, res) => {
+app.get('/ranking', async (req, res) => {
     // Retorna un ranking de jugadors/es ordenat per percentatge d'èxits i el percentatge d’èxits mig del conjunt de tots els jugadors/es.
+    let missatge = "";
+    try {
+        const llistatJugadors = await dbJugadors.findAll({})
+        // const llistat = JSON.stringify(llistatJugadors);
+        // console.log("llistat:", llistat);
+
+        llistatJugadors.forEach(jugador => {
+            missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit} \n \n`
+            console.log(missatge);
+        });
+
+        // for (let i=0; i<llistatJugadors.length; i++) {
+        // const jugadaActual = llistatJugadors[i]
+        //     missatge += `ID Jugador: ${jugadaActual.idJugador} \nNom Jugador: ${jugadaActual.nomJugador} \nPercentatge d'èxit: ${jugadaActual.percentatgeExit} \n \n`
+        //     console.log(missatge)
+        // };
+
+        console.log(missatge)
+        res.status(200).send(missatge);
+    } catch (error) {
+        res.status(400).send(error);
+    };
+
+
+    // array1.forEach(element => console.log(element));
 });
 
 app.get('/ranking/loser/', (req, res) => {
