@@ -510,9 +510,11 @@ app.get('/ranking', async (req, res) => {
         const llistatJugadors = await dbJugadors.findAll({})
         // const llistat = JSON.stringify(llistatJugadors);
         // console.log("llistat:", llistat);
-
-        llistatJugadors.forEach(jugador => {
-            missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit} \n \n`
+        console.log("sin ordenar:", llistatJugadors)
+        let rankingLlistatJugadors = llistatJugadors.reverse(llistatJugadors.sort((a, b) => a - b));
+        console.log("ordenada:", rankingLlistatJugadors)
+        rankingLlistatJugadors.forEach(jugador => {
+            missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit}% \n \n`
             console.log(missatge);
         });
 
@@ -522,7 +524,6 @@ app.get('/ranking', async (req, res) => {
         //     console.log(missatge)
         // };
 
-        console.log(missatge)
         res.status(200).send(missatge);
     } catch (error) {
         res.status(400).send(error);
@@ -532,12 +533,46 @@ app.get('/ranking', async (req, res) => {
     // array1.forEach(element => console.log(element));
 });
 
-app.get('/ranking/loser/', (req, res) => {
+app.get('/ranking/loser', async(req, res) => {
     // retorna el jugador/a amb pitjor percentatge d’èxit.
+
+    let missatge = "";
+    try {
+        const maximaPuntuacio = await dbJugadors.min('percentatgeExit');
+        const guanyador = await dbJugadors.findOne({ where: { percentatgeExit: maximaPuntuacio } });
+
+        console.log("maxima puntuacio:", maximaPuntuacio);
+        console.log("guanyador:", guanyador);
+
+        missatge += `PERDEDOR:  \n ID Jugador: ${guanyador.nomJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
+        console.log("guamyador:", missatge);
+
+        res.status(200).send(missatge);
+    } catch (error) {
+        res.status(400).send(error);
+    };
+
 });
 
-app.get('/ranking/winner/', (req, res) => {
+app.get('/ranking/winner', async (req, res) => {
     // retorna el jugador/a amb millor percentatge d’èxit.
+
+    let missatge = "";
+    try {
+        const maximaPuntuacio = await dbJugadors.max('percentatgeExit');
+        const guanyador = await dbJugadors.findOne({ where: { percentatgeExit: maximaPuntuacio } });
+
+        console.log("maxima puntuacio:", maximaPuntuacio);
+        console.log("guanyador:", guanyador);
+
+        missatge += `GUANYADOR:  \n ID Jugador: ${guanyador.nomJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
+        console.log("guamyador:", missatge);
+
+        res.status(200).send(missatge);
+    } catch (error) {
+        res.status(400).send(error);
+    };
+
 });
 
 
