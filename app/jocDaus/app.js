@@ -283,7 +283,7 @@ app.put('/players/:id', async (req, res) => {
     };
 });
 
-app.get('/players', async(req, res) => {
+app.get('/players', async (req, res) => {
     // Retorna llitat dels jugadors
 
     let missatge = "";
@@ -342,8 +342,6 @@ app.post(`/games/:id`, async (req, res) => {
             console.log("nomjugador", jugadorTrobat.nomJugador);
             console.log("tirades jugador:", jugadorTrobat.tiradesJugador);
 
-            const tiradesPerJugador = ++jugadorTrobat.tiradesJugador;
-            await jugadorTrobat.update({ tiradesJugador: tiradesPerJugador });
             // await jugadorTrobat.update({})
 
             // let percentatgeExit = 0;
@@ -358,13 +356,12 @@ app.post(`/games/:id`, async (req, res) => {
                 }
             );
 
+            const tiradesPerJugador = ++jugadorTrobat.tiradesJugador;
+            await jugadorTrobat.update({ tiradesJugador: tiradesPerJugador });
             console.log("HOLAAA", jugadorTrobat);
             console.log("HOLAAAAAA", tiradaDaus);
 
-            // TODO  NO CALCULA BIEN EL PORCENTAJE. REVISARLO !!!!!!!!!!!!!!
-            let percentatgeExit = 0;
             if (tiradaDaus.resultatJugada === true) {
-
                 console.log(`El jugador ${jugadorTrobat.nomJugador} ha guanyat!`)
                 // console.log("<<<<GUANYADES>>>>", jugadorTrobat.tiradesGuanyades)
                 await jugadorTrobat.update(
@@ -372,18 +369,21 @@ app.post(`/games/:id`, async (req, res) => {
                         tiradesGuanyades: ++jugadorTrobat.tiradesGuanyades
                     }
                 );
-
-                percentatgeExit = (jugadorTrobat.tiradesGuanyades * 100) / jugadorTrobat.tiradesPerJugador;
-                console.log(percentatgeExit)
-                await jugadorTrobat.update(
-                    {
-                        percentatgeExit: percentatgeExit
-                    }
-                )
+                console.log("tirades guanyades", jugadorTrobat.tiradesGuanyades)
+                console.log("tirades tiradesPerJugador", jugadorTrobat.tiradesJugador)
                 // console.log("tirades Guanyades", tiradesGuanyades);
                 // console.log(guardarTirada)
                 // console.log("Percentatge actualitzat")
             };
+            // TODO  NO CALCULA BIEN EL PORCENTAJE. REVISARLO !!!!!!!!!!!!!!
+            let percentatge = 0;
+            percentatge = (jugadorTrobat.tiradesGuanyades * 100) / jugadorTrobat.tiradesJugador;
+            console.log(percentatge)
+            await jugadorTrobat.update(
+                {
+                    percentatgeExit: percentatge
+                }
+            )
 
             const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
             const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
@@ -501,6 +501,9 @@ app.get(`/games/:id`, async (req, res) => {
 });
 
 app.get('/ranking', async (req, res) => {
+    //TODO  falta ordenar por orden de éxitos
+    //TODO  falta calcular percentatge d'exists mig de tots els jugadors
+
     // Retorna un ranking de jugadors/es ordenat per percentatge d'èxits i el percentatge d’èxits mig del conjunt de tots els jugadors/es.
     let missatge = "";
     try {
