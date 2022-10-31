@@ -1,15 +1,15 @@
 let resultatJugada = false;
 let tirades = 0;
+console.log("hOLaaaaa")
 
-
-const tiradaDaus = function tiroDaus() {
+function tiroDaus() {
     let tiradaDau1 = parseInt(Math.random() * 6 + 1);
     let tiradaDau2 = parseInt(Math.random() * 6 + 1);
     console.log("DAU 1:", tiradaDau1);
     console.log("DAU 2:", tiradaDau2);
     // let resultat = false;
 
-    ++tirades;
+    // ++tirades;
     let sumaDados = tiradaDau1 + tiradaDau2;
     console.log(sumaDados);
     if (sumaDados == 7) {
@@ -19,8 +19,6 @@ const tiradaDaus = function tiroDaus() {
     }
     console.log(tiradaDau1, tiradaDau2, resultatJugada);
     return ({ tiradaDau1, tiradaDau2, resultatJugada });
-    // console.log(nombre)
-    console.log(tirades);
 };
 
-module.exports = tiradaDaus;
+module.exports = tiroDaus;

@@ -13,7 +13,7 @@ const mostrarGuanyador = async (req, res) => {
         console.log("maxima puntuacio:", maximaPuntuacio);
         console.log("guanyador:", guanyador);
 
-        missatge += `GUANYADOR:  \n ID Jugador: ${guanyador.nomJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
+        missatge += `GUANYADOR:  \n ID Jugador: ${guanyador.idJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
         console.log("guamyador:", missatge);
 
         res.status(200).send(missatge);

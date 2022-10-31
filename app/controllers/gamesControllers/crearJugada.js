@@ -1,7 +1,9 @@
 // app.post(`/games/:id`, 
 
+const tiroDaus = require('../../helpers/tiradaDaus');
+// const tiradaDaus = require('../../helpers/tiradaDaus');
 const {dbJugadors, dbJugades} = require('../../models/dbJoc');
-const tirada = require('../helpers/tiradaDaus.js');
+// const tiradaDaus = require('../helpers/tiradaDaus.js');
 
 const crearJugada = async (req, res) => {
     // Un jugador/a específic realitza una tirada.
@@ -18,7 +20,7 @@ const crearJugada = async (req, res) => {
             res.status(400).json({ Error: "Aquest jugador no existeix!" });
 
         } else {
-            const tiradaDaus = tiroDaus;
+            const tiradaDaus = tiroDaus();
             console.log('tiradaDaus', tiradaDaus); // devuelve array del return
             console.log(tiradaDaus.resultatJugada); // devuelve array del return
 
