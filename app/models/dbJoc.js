@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 
-
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const mysql = require("mysql2/promise");
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Open the connection to MySQL server
 // https://www.npmjs.com/package/mysql2#using-promise-wrapper 
@@ -26,14 +27,13 @@ async function connectionDB() {
     }
 };
 
+
+// Run the Sequelize code to connect to the database 
 const sequelize = new Sequelize("dbJugadors", "root", "1234", {
     host: "localhost",
     dialect: "mysql",
 });
 
-
-// Close the connection
-// connection.end();
 
 sequelize.authenticate()
 connectionDB()
@@ -41,7 +41,6 @@ connectionDB()
         console.log("CONEXIÓN A LA BASE DE DATOS OK");
     })
     .catch(error => {
-       
         console.log("EL ERROR DE CONEXIÓN ES: " + error);
     });
 
@@ -64,8 +63,6 @@ const dbJugadors = sequelize.define('Jugadors', {
 });
 
 
-//  Definim model  'JUGADES':
-
 
 const dbJugades = sequelize.define('Jugades', {
     idJugada: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
@@ -75,9 +72,20 @@ const dbJugades = sequelize.define('Jugades', {
     partidaGuanyada: { type: Sequelize.BOOLEAN},
 });
 
+
 dbJugades.belongsTo(dbJugadors);   //Associació entre taules!
 dbJugadors.hasMany(dbJugades);
 
+
 sequelize.sync()
+
+// console.log(dbjugadors[0]);
+
+// Creating all the tables defined in DB
+
+
+// app.listen(port, () => {
+//     console.log(`API REST inicialitzant en http://localhost: ${port}`)
+// });
 
 module.exports = {dbJugadors, dbJugades};

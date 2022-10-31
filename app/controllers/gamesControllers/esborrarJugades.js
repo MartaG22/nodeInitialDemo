@@ -1,7 +1,8 @@
-const dbJugadors = require('../../models/dbJugadors.js');
+const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
+// app.delete(`/games/:id`, 
 
-app.delete(`/games/:id`, async (req, res) => {
+const esborrarJugades = async (req, res) => {
     // elimina les tirades d'un jugador/a.
 
     // console.log("Introdueix el ID d'un Jugador:");
@@ -39,8 +40,6 @@ app.delete(`/games/:id`, async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     };
-});
+};
 
-
-
-module.exports = crearJugador;
+module.exports = esborrarJugades;

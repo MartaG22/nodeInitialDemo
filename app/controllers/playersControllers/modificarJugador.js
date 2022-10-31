@@ -1,8 +1,9 @@
-const dbJugadors = require('../../models/dbJugadors.js');
+// app.post('/players', 
+
+const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
 
-// app.put ('/players/:id'
-
+// app.put('/players/:id',
 const modificarJugador = async (req, res) => {
     // Modifica el nom dels jugadors
 
@@ -55,4 +56,5 @@ const modificarJugador = async (req, res) => {
     };
 };
 
-module.exports = modificarJugador;
+
+module.exports =  modificarJugador;

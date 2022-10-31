@@ -1,6 +1,6 @@
 // app.post('/players', 
 
-const dbJugadors = require('../../models/dbJugadors.js');
+const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
 const crearJugador = async (req, res) => {
     // Crear jugadors
@@ -13,19 +13,17 @@ const crearJugador = async (req, res) => {
     console.log(nom)
 
     if (!nom || nom == 'ANÒNIM') {
-        console.log("HOLAAAA")
         try {
             const jugadorAnonim = await dbJugadors.create({
                 nomJugador: "ANÒNIM"
             });
             console.log("Jugador creat com a 'ANÒNIM'!");
-            res.status(200).send(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
+            res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
 
         } catch (error) {
             res.status(400).json(error);
         }
     } else {
-        console.log("holaaa")
         try {
             const jugador = await dbJugadors.findOne({ where: { nomJugador: nom } });   // Validació per trobar si existeix un jugador amb el nom introduit
             if (jugador) {
@@ -37,7 +35,7 @@ const crearJugador = async (req, res) => {
                 });
 
                 console.log("Jugador creat amb èxit")
-                res.status(200).send(`S'ha creat el jugador: ${jugador.nomJugador}`);
+                res.status(200).json(`S'ha creat el jugador: ${jugador.nomJugador}`);
             };
 
         } catch (error) {

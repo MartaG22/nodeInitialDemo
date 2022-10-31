@@ -1,9 +1,8 @@
-const dbJugadors = require('../../models/dbJugadors.js');
-
+const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
 // app.get(`/games/:id`, 
 
-const  llistarJoc = async (req, res) => {
+const llistarJugades =  async (req, res) => {
     // Retorna el llistat de jugades per un jugador/a.
     // Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. 
     // A més, pot saber el percentatge d’èxit de les tirades que ha fet.
@@ -58,4 +57,4 @@ const  llistarJoc = async (req, res) => {
     };
 };
 
-module.exports = llistarJoc;
+module.exports = llistarJugades;

@@ -1,11 +1,10 @@
-const dbJugadors = require('../../models/dbJugadors.js');
+// app.post('/players', 
 
+const {dbJugadors, dbJugades} = require('../../models/dbJoc.js');
 
 // app.get('/players', 
-
-
-const llistarJugadors = async (req, res) => {
-    // Retorna llitat dels jugadors amb el seu percentatge d'èxit
+const llistarJugador = async (req, res) => {
+    // Retorna llitat dels jugadors
 
     let missatge = "";
     try {
@@ -25,4 +24,4 @@ const llistarJugadors = async (req, res) => {
 
 };
 
-module.exports = llistarJugadors;
+module.exports = llistarJugador;

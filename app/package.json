@@ -5,20 +5,20 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app/app.js"
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MartaG22/nodeInitialDemo.git#jocdaus"
+    "url": "git+https://github.com/MartaG22/nodeInitialDemo.git#jocDaus"
   },
   "author": "Marta Garijo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MartaG22/nodeInitialDemo/issues"
   },
-  "homepage": "https://github.com/MartaG22/nodeInitialDemo/tree/jocdaus#readme",
+  "homepage": "https://github.com/MartaG22/nodeInitialDemo/tree/jocDaus#readme",
   "dependencies": {
-    "body-parse": "^0.1.0",
+    "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20",

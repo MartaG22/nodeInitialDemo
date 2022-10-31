@@ -1,31 +1,36 @@
-// Importar Controllers
-const crearJugadorController = require('../controllers/playersControllers/createPlayer.js');
-const modificarJugadorController = require('../controllers/playersControllers/renamePlayer.js');
-const llistarJugadorsController = require('../controllers/playersControllers/listPlayers.js');
-
+// const { Router } = require('express');
 const express = require('express');
 const app = express();
-const router = express.Router();
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
-// // const bodyParser = require('body-parser');
+const routes = express.Router();
+
+const { dbJugadors, dbJugades } = require('../models/dbJoc.js');
+// const tiroDaus = require('../helpers/tiradaDaus.js')
+
+const crearJugador = require('../controllers/playersControllers/crearJugador.js');
+const modificarJugador = require('../controllers/playersControllers/modificarJugador.js');
+const llistarJugador = require('../controllers/playersControllers/llistarJugador.js');
+
+const crearJugada = require('../controllers/gamesControllers/crearJugada.js')
+const esborrarJugades = require('../controllers/gamesControllers/esborrarJugades.js')
+const llistarJugades = require('../controllers/gamesControllers/llistarJugades.js')
+
+const llistarRanking = require('../controllers/rankingControllers/llistarRanking.js');
+const mostrarPerdedor = require('../controllers/rankingControllers/mostrarPerdedor.js');
+const mostrarGuanyador = require('../controllers/rankingControllers/mostrarGuanyador.js');
 
 
-const cors = require('cors');
-const dbJugadors = require('../models/dbJugadors.js');
+routes.post('/players', crearJugador);
+routes.put('/players/:id', modificarJugador);
+routes.get('/players', llistarJugador);
+
+routes.post(`/games/:id`, crearJugada);
+routes.delete(`/games/:id`, esborrarJugades);
+routes.get(`/games/:id`, llistarJugades);
 
 
-// const players = require('./players_routes.js');
-// const games = require('./games_routes.js');
-// const ranking = require('./ranking_routes.js');
+routes.get('/ranking', llistarRanking);
+routes.get('/ranking/loser', mostrarPerdedor);
+routes.get('/ranking/winner', mostrarGuanyador);
 
 
-
-
-
-router.post('/players', crearJugadorController);
-router.put('/players/:id', modificarJugadorController);
-router.get('/players', llistarJugadorsController);
-
-
-module.exports = router;
+module.exports = routes;
