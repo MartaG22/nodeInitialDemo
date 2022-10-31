@@ -33,7 +33,7 @@ const express = require('express');
 const app = express();
 
 // const port = process.env.PORT || 3001;
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const mysql = require("mysql2/promise");
 
 
