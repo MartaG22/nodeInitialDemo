@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const mysql = require("mysql2/promise");
 
 

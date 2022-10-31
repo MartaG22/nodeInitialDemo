@@ -4,18 +4,17 @@
 
 
 const express = require('express');
+
+const routes = require('./routes/index_routes.js');
+const dbJugadors = require('./models/dbJugadors.js');
+
+
 const app = express();
-
-const router = require('./routes/index_routes.js')
-const dbJugadors = require('./routes/index_routes.js')
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+// const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 3000;
-
-
-
 
 
 // // Open the connection to MySQL server
@@ -62,7 +61,7 @@ const port = process.env.PORT || 3000;
 // const dbJugades = require('./models/dbGames.js');
 
 
-app.use("/", router)
+app.use("/", routes)
 
 
 
