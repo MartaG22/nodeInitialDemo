@@ -1,7 +1,5 @@
 const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
-// app.get(`/games/:id`, 
-
 const llistarJugades =  async (req, res) => {
     // Retorna el llistat de jugades per un jugador/a.
     // Cada jugador/a pot veure un llistat de totes les tirades que ha fet amb el valor de cada dau i si s’ha guanyat o no la partida. 
