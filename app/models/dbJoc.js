@@ -27,13 +27,11 @@ async function connectionDB() {
     }
 };
 
-
 // Run the Sequelize code to connect to the database 
 const sequelize = new Sequelize("dbJugadors", "root", "1234", {
     host: "localhost",
     dialect: "mysql",
 });
-
 
 sequelize.authenticate()
 connectionDB()
@@ -44,8 +42,7 @@ connectionDB()
         console.log("EL ERROR DE CONEXIÓN ES: " + error);
     });
 
-
-    //  Definim model  'JUGADORS':
+//  Definim model  'JUGADORS':
 const dbJugadors = sequelize.define('Jugadors', {
     idJugador: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
     nomJugador: {

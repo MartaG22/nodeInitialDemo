@@ -1,5 +1,3 @@
-// app.post('/players', 
-
 const {dbJugadors, dbJugades} = require('../../models/dbJoc.js');
 
 // app.get('/players', 

@@ -27,7 +27,6 @@ routes.post(`/games/:id`, crearJugada);
 routes.delete(`/games/:id`, esborrarJugades);
 routes.get(`/games/:id`, llistarJugades);
 
-
 routes.get('/ranking', llistarRanking);
 routes.get('/ranking/loser', mostrarPerdedor);
 routes.get('/ranking/winner', mostrarGuanyador);

@@ -1,6 +1,5 @@
 const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
-// app.get('/ranking/winner', 
 
 const mostrarGuanyador = async (req, res) => {
     // retorna el jugador/a amb millor percentatge d’èxit.

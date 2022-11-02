@@ -15,7 +15,6 @@ const llistarRanking = async (req, res) => {
         // let rankingLlistatJugadors = llistatJugadors.reverse(llistatJugadors.sort((a, b) => a - b));
         // console.log("ordenada:", rankingLlistatJugadors)
 
-        // const llistatOrdenat = 
         await dbJugadors.findAll({
             order: [
                 ['percentatgeExit', 'DESC']
