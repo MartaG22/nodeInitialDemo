@@ -1,6 +1,5 @@
 const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
-
 const mostrarGuanyador = async (req, res) => {
     // retorna el jugador/a amb millor percentatge d’èxit.
 
@@ -13,7 +12,7 @@ const mostrarGuanyador = async (req, res) => {
         console.log("guanyador:", guanyador);
 
         missatge += `GUANYADOR:  \n ID Jugador: ${guanyador.idJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
-        console.log("guamyador:", missatge);
+        console.log("guanyador:", missatge);
 
         res.status(200).send(missatge);
     } catch (error) {

@@ -8,7 +8,6 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// const { dbJugadors, dbJugades } = require('./dbJugadors.js');
 const routes = require('./routes/index_routes.js')
 const port = process.env.PORT || 3000;
 

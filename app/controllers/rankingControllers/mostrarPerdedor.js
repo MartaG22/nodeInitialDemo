@@ -1,6 +1,5 @@
 const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 
-
 const mostrarPerdedor = async (req, res) => {
     // retorna el jugador/a amb pitjor percentatge d’èxit.
 
