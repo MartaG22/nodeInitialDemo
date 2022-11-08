@@ -18,7 +18,7 @@ S'han d'instal·lar les següents tecnologies:
 > **Step 1** - Clonar el projecte:
 ```
 
-https://github.com/MartaG22/nodeInitialDemo/tree/API-REST
+https://github.com/MartaG22/nodeInitialDemo/tree/api-rest
 ```
 
 
