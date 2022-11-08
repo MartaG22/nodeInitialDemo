@@ -7,6 +7,31 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 
+
+const {Server} = require('socket.io');
+const io = new Server(server);
+
+
+io.on('connection', (socket) => {
+    // console.log('Un usuario se ha conectado');
+
+    // socket.on('disconnect', () => {
+    //     console.log('Un usuario se ha desconectado');
+    // })
+
+    // socket.on('chat', (missatge) => {
+    //     console.log("Mensaje:" + missatge)
+    // })
+
+    socket.on("chat", (missatge) => {
+        io.emit("chat", missatge)
+    })
+
+
+})
+
+
+
 app.get('/', (req, res) => {
     // res.send('<h1> Aplicació de XAT <h1/>')
     // console.log(__dirname);
