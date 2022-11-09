@@ -74,9 +74,14 @@ https://github.com/MartaG22/nodeInitialDemo/tree/jocdaus
 - npm install
 ```
 Utilitzarem les següents dependències:
+
+Per executar el projecte amb Sequelize:
  - **Express** -- per consumir les REST-API.
  - **MySql** -- per la base de dades.
- - **Sequelize** -- como ORM, para poder manjar la base de datos en nodejs.
+ - **Sequelize** -- com ORM, per poder utilitzar la base de dades de Mysql en nodejs.
+
+Per executar el projecte amb Mongoose:
+ - **Mongoose** -- com ORM, per poder utilitzar la base de dades de Mongo en nodejs.
  ```
  ```
 
