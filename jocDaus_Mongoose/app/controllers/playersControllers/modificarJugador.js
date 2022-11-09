@@ -1,12 +1,10 @@
-// app.post('/players', 
-
-const Jugador = require('../../models/dbJoc_Mongoose.js');
+const Jugador = require('../../models/dbJugador.js');
 
 
 const modificarJugador = async (req, res) => {
     // Modifica el nom dels jugadors
     const id = req.params.id;
-    
+
     console.log(id)
     console.log("HOLAAA/34535")
     try {  //TODO  FALTA buscar por ID y guardar por ID
@@ -26,9 +24,6 @@ const modificarJugador = async (req, res) => {
         } else {
             try {
                 const nomJugadorTrobat = jugadorAModificar.nomJugador
-                console.log('idJugador:', jugadorAModificar.idJugador, 'nomJugadorTrobat:', nomJugadorTrobat)
-                console.log('nouNomJugador:', nouNomJugador);
-
                 const nomJugadorRepetit = await Jugador.findOne({ nomJugador: nouNomJugador });   // Validació per trobar si existeix un jugador amb el nom introduit
                 console.log('nomJugadorRepetit:', nomJugadorRepetit);
 
@@ -43,15 +38,9 @@ const modificarJugador = async (req, res) => {
                     res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
 
                 } else {   // TODO falta ensenyar el nom  del jugador modificat / NO L'ENSENYA BÉ, ENCARA QUE CANVIA EL NOM
-                    console.log('jugadorAModificar', jugadorAModificar)
-                    await jugadorAModificar.updateOne({ nomJugador: nouNomJugador  });
-                    
-                    console.log('nom modificat', jugadorAModificar)
-                    console.log('nom nomJugadorTrobat', nomJugadorTrobat)
-                    console.log('nom modificat / nomJugador', nouNomJugador)
+                    await jugadorAModificar.updateOne({ nomJugador: nouNomJugador });
 
                     res.status(200).json(`Nom del jugador modificat amb èxit.  Nou nom:  ${jugadorAModificar.nomJugador}`);
-
                 };
 
             } catch (error) {
@@ -64,4 +53,4 @@ const modificarJugador = async (req, res) => {
 };
 
 
-module.exports =  modificarJugador;
+module.exports = modificarJugador;

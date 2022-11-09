@@ -1,4 +1,4 @@
-const Jugador = require('../../models/dbJoc_Mongoose.js');
+const Jugador = require('../../models/dbJugador.js');
 const Jugada = require('../../models/dbjugada.js');
 console.log(Jugador);
 
@@ -15,8 +15,6 @@ const crearJugador = async (req, res) => {
     if (!nom || nom == 'ANÒNIM') {
 
         try {
-            // db.products.update({ _id: ObjectId("19222n282jws0") },{ $inc: { quantity: +1} })
-            
             const jugadorAnonim = await Jugador.create(  { idJugador: quantitatJugadors +1, nomJugador: "ANÒNIM" });
             jugadorAnonim.save();
 
@@ -35,21 +33,16 @@ const crearJugador = async (req, res) => {
                 res.status(400).json({ "Error": "Aquest jugador ja existeix!" });
 
             } else {
-                // console.log("Jugador creat com a 'NOOOMM'!");
                 const nouJugador = await Jugador.create({  idJugador: quantitatJugadors +1, nomJugador: nom });
                 nouJugador.save();
-                // const jugador = await dbJugadors.create({
-                //     nomJugador: nom,
-                // });
 
                 console.log("Jugador creat amb èxit");
                 res.status(200).json(`S'ha creat el jugador: ${nouJugador.nomJugador}`);
             };
-
         } catch (error) {
             res.status(400).send(error);
-        }
-    }
+        };
+    };
 };
 
 module.exports = crearJugador;

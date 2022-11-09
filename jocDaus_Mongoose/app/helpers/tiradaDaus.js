@@ -6,9 +6,7 @@ function tiroDaus() {
     let tiradaDau2 = parseInt(Math.random() * 6 + 1);
     console.log("DAU 1:", tiradaDau1);
     console.log("DAU 2:", tiradaDau2);
-    // let resultat = false;
 
-    // ++tirades;
     let sumaDados = tiradaDau1 + tiradaDau2;
     console.log(sumaDados);
     if (sumaDados == 7) {

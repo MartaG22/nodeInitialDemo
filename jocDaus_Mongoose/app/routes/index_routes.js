@@ -2,10 +2,7 @@
 const express = require('express');
 const app = express();
 const routes = express.Router();
-// const mongoose = require('mongoose');
-// const { dbJugadors, dbJugades } = require('../models/dbJoc.js');
-const Joc = require('../models/dbJoc_Mongoose.js');
-// const tiroDaus = require('../helpers/tiradaDaus.js')
+
 
 const crearJugador = require('../controllers/playersControllers/crearJugador.js');
 const modificarJugador = require('../controllers/playersControllers/modificarJugador.js');

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const tirada = new Schema(
     {
         _$oid: {},   // TODO  falta hacer el ID con auto-increment
@@ -12,6 +11,5 @@ const tirada = new Schema(
         idJugador: { type: Number}
     }
 );
-
 
 module.exports = mongoose.model('Jugade', tirada);

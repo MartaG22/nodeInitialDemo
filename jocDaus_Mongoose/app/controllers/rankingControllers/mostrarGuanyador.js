@@ -1,7 +1,5 @@
-const Jugador = require('../../models/dbJoc_Mongoose.js');
+const Jugador = require('../../models/dbJugador.js');
 const Jugada = require('../../models/dbjugada.js');
-
-// app.get('/ranking/winner', 
 
 const mostrarGuanyador = async (req, res) => {
     // retorna el jugador/a amb millor percentatge d’èxit.
@@ -18,7 +16,8 @@ const mostrarGuanyador = async (req, res) => {
             missatge += `GUANYADOR:  \n ID Jugador: ${guanyador.idJugador} \n Nom Jugador: ${guanyador.nomJugador} \n Percentatge d'èxit: ${guanyador.percentatgeExit}% \n \n`
 
 
-            const quantitatJugadors = llistatOrdenat.length;  // BUSQUEM EMPATS:
+            // BUSQUEM EMPATS:
+            const quantitatJugadors = llistatOrdenat.length;  
             llistatOrdenat.forEach(jugador => {
                 const idJugadorActual = jugador.idJugador;
                 const percentatgeJugadorActual = jugador.percentatgeExit
@@ -28,17 +27,13 @@ const mostrarGuanyador = async (req, res) => {
                 }
             })
 
-
-
         });
 
         console.log("guanyador:", missatge);
-
         res.status(200).send(missatge);
     } catch (error) {
         res.status(400).send(error);
     };
-
 };
 
 module.exports = mostrarGuanyador;
