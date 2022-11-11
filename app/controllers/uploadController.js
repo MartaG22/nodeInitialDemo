@@ -1,4 +1,5 @@
 // Nivell 1 - Exercici 2
+// TODO •	El /upload està quasi bé, però falla al pujar un arxiu perquè no comprova si hi ha la carpeta on puja els arxius per crear-la si no existeix (has d'afegir la comprovació perquè git no puja carpetes buides)
 
 const uploadFile = (req, res) => {
     try {
