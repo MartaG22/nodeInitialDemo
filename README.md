@@ -92,6 +92,11 @@ npm start
 - **POST/time** --- 
 
   Si les dades introduides es corresponen amb les que estan registrades, es mostrarà "Usuari correcte", en el cas contrari es mostrarà "Usuari incorrecte"
+```
+{
+    "name": "Omar",
+}
+```
 
 
 - **GET/pokemon/:id** --- 
