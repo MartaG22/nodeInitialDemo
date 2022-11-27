@@ -4,6 +4,12 @@
 // https://www.oscarblancarteblog.com/2018/01/16/implementar-json-web-tokens-nodejs/
 // https://carlosazaustre.es/autenticacion-con-token-en-node-js
 //! implementar jsonwebtoken en nodejs
+// https://www.youtube.com/watch?v=jD7FnbI76Hg&t=1339s    <<<>>>   https://github.com/xaviercomi/xat   (ejemplo)
+// EJEMPLOS:
+// https://github.com/JoanUniverse/QuePassaEh  (ejemplo)
+// https://github.com/albert688/xat
+
+
 
 const express = require('express');
 const app = express();
