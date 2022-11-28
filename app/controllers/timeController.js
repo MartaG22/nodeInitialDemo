@@ -5,7 +5,10 @@ const time = (req, res) => {
 
         const usuariCorrecte = "Omar";
         const nomUsuari = req.body.nom;
+        const passwordUsuari = req.body.password;
         console.log("nomusuari", nomUsuari);
+        console.log("passwordUsuari", passwordUsuari);
+        
 
         if (usuariCorrecte === nomUsuari) {
             let dataActual = new Date;

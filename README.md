@@ -95,6 +95,7 @@ npm start
 ```
 {
     "name": "Omar",
+    "password": "IT-Academy"
 }
 ```
 
