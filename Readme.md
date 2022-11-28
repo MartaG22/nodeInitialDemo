@@ -86,9 +86,17 @@ Per executar el projecte amb Mongoose:
  ```
 
 > **Step 3** - Inicialitzar el server 
-npm start
 
+### - Iniciar el server amb Mysql:
 
+**npm run mysql**
+
+### - Iniciar el server amb mongo:
+
+**npm run mongo**
+
+```
+```
 
 
 ## Endpoints
