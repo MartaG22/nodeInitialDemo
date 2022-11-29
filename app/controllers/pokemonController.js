@@ -7,20 +7,19 @@ const pokemon = async (req, res) => {
     // const id = req.params.id;
     const id = await req.params.id;
 
-    if (isNaN(id)) {   //? AQUEST VALIDACIÓ DE EST+À BÉ, FUNCIONAAAA"""
+    if (isNaN(id)) {
+      //? AQUEST VALIDACIÓ DE EST+À BÉ, FUNCIONAAAA"""
       Error = "S'ha d'introduir un nombre";
-    } else {
+    }
 
     const url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
 
     const pokemonTrobat = await fetch(url);
 
-
-    
-console.log ('pokemonTrobat', pokemonTrobat)
+    console.log("pokemonTrobat", pokemonTrobat);
     if (!pokemonTrobat) {
       // if (res.status >= 400) {
-      Error = "Aquest POKEMON no està enregistrat!";
+      Error = "No existeix aquest POKEMON!";  //? Error 404
     } else {
       const pokemon = await pokemonTrobat.json();
 
@@ -33,7 +32,6 @@ console.log ('pokemonTrobat', pokemonTrobat)
       console.log(dadesPokemon);
       res.status(200).send(dadesPokemon);
     }
-  }
   } catch (Error) {
     return res.status(400).send({ Error });
   }
