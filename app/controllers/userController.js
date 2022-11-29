@@ -6,17 +6,13 @@ const url = require('url');
 const user = (req, res) => {
 
     console.log("protocol:", req.url )
-    // + "://" + req.headers.host + req.url)
     const userUrl = req.protocol + "://" + req.headers.host + req.url
-
-    // console.log(req.url)
-    // let userUrl= req.user.url;
+    // req.protocol ==>>  http
+    // req.headers.host ==>> localhost:3000
+    // req.url  ==>> /user
     
-    
-
     try {
-        res.send({ nomUsuari: `Marta Garijo`, edat: 48, url: userUrl })
-        // res.send({ nomUsuari: `Marta Garijo`, edat: 48, url: 'http://localhost:3000/user' })
+        res.send({ nomUsuari: `Bart Simpson`, edat: 10, url: userUrl })
     } catch (error) {
         return res.status(400).json({ error });
     };
