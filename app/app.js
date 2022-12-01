@@ -28,6 +28,8 @@ Molt ben fet, Marta! Et comento algunes coses que s'han de revisar:
 •	Tens un parell de coses rares a l'estructura del projecte: tens dos README i dos package.json. Hauries de sobreescriure els de fora de la carpeta app en comptes de crear-ne uns altres a dins
 •	S'haurien de controlar les rutes no especificades perquè no retornin el HTML predeterminat de Express
 
+TODO [x]	Tens un parell de coses rares a l'estructura del projecte: tens dos README i dos package.json. Hauries de sobreescriure els de fora de la carpeta app en comptes de crear-ne uns altres a dins
+
 TODO [x]  •	Al /user la direcció de la ruta està hardcoded, hauries d'agafar-la de les propietats de la request  
 
 TODO []  •	El /upload està quasi bé, però falla al pujar un arxiu perquè no comprova si hi ha la carpeta on puja els arxius per crear-la si no existeix (has d'afegir la comprovació perquè git no puja carpetes buides)
