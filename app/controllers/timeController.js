@@ -16,19 +16,20 @@ const time = (req, res) => {
                 suceso: true,
                 missatge: "Usuari correcte!",
                 usuari: nomUsuari,
+                password: passwordUsuari,
                 data: `${dataActual.getDate()}/${dataActual.getMonth() + 1}/${dataActual.getFullYear()}`,
                 hora: `${dataActual.getHours()}:${String(dataActual.getMinutes()).padStart(2, '0')}`
             });
             return res.send.json;
 
         } else {
-            res.status(400).json({
+            res.status(401).json({
                 suceso: false,
                 missatge: "Usuari incorrecte"
             })
         };
     } catch (error) {
-        return res.status(401).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
 
     };
 };
