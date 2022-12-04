@@ -91,15 +91,26 @@ npm start
 
 - **POST/time** --- 
 
-  Si les dades introduides es corresponen amb les que estan registrades, es mostrarà "Usuari correcte", en el cas contrari es mostrarà "Usuari incorrecte"
+#### POST/ http:localhost:3000/time
+  Si les dades introduides es corresponen amb les que estan enregistrades, es mostrarà "Usuari correcte" i ens retornarà la data actual, en el cas contrari es mostrarà "Usuari incorrecte"
 ```
 {
     "name": "Omar",
     "password": "IT-Academy"
 }
 ```
+**NIVELLL 2**
+- **POST/time** --- 
+```
 
+Per testejar aquest endpoint, des del Postman, s'ha d'afegir "Basic Auth" a l'apartat "Authorization":
 
+- "Username": "admin",
+- "Password": password1234
+```
+```
+
+**EXERCICI 3 - NIVELLL 1**
 - **GET/pokemon/:id** --- 
 
 Agafa les dades d'un pokemon pel seu ID a la web  ==>[Pokémon API](https://pokeapi.co/)  i ens retorna el nom, l'alçada i el pes corresponents.
