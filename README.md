@@ -72,8 +72,9 @@ npm start
 ## ENDPOINTS:
  
 - **GET/user** --- 
-```
+#### GET/ http:localhost:3000/user
 
+```
 {
     "name": "Bart Simpson",
     "age": "10",
@@ -82,6 +83,7 @@ npm start
 ```
 
 - **POST/upload** --- 
+#### POST/ http:localhost:3000/upload
 
  S'ha d'insertar una imatge. Les extensions permeses són .png, .jpg, .tif.
  Si la imatge introduida correspon amb aquestes extension es mostrarà un missatge d'èxit.
@@ -92,28 +94,38 @@ npm start
 - **POST/time** --- 
 
 #### POST/ http:localhost:3000/time
-  Si les dades introduides es corresponen amb les que estan enregistrades, es mostrarà "Usuari correcte" i ens retornarà la data actual, en el cas contrari es mostrarà "Usuari incorrecte"
+  Si les dades introduides es corresponen amb les que estan enregistrades, es mostrarà "Usuari correcte" i ens retornarà la data actual, en el cas contrari es mostrarà "Usuari incorrecte!".
+  
 ```
 {
     "name": "Omar",
     "password": "IT-Academy"
 }
 ```
+
+
 **NIVELLL 2**
 - **POST/time** --- 
-```
+#### POST/ http:localhost:3000/time
 
 Per testejar aquest endpoint, des del Postman, s'ha d'afegir "Basic Auth" a l'apartat "Authorization":
 
+Si les dades introduides no són les correctes, ens mostrarà "Usuari no autoritzat!"
+
+```
 - "Username": "admin",
 - "Password": password1234
 ```
-```
+
+
 
 **EXERCICI 3 - NIVELLL 1**
 - **GET/pokemon/:id** --- 
 
+#### GET/ http:localhost:3000/pokemon/:id
+
 Agafa les dades d'un pokemon pel seu ID a la web  ==>[Pokémon API](https://pokeapi.co/)  i ens retorna el nom, l'alçada i el pes corresponents.
+
  ```
     "pokemon": {
         "ID Pokemon": "41",
@@ -121,5 +133,4 @@ Agafa les dades d'un pokemon pel seu ID a la web  ==>[Pokémon API](https://poke
         "alçada Pokemon": 8,
         "pes Pokemon": 75
     }
-
 ```
