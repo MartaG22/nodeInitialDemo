@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "28704eba-d351-4442-9bc6-4e8661ebf827",
+		"name": "API-REST Entrega 4.1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17998947"
+	},
+	"item": [
+		{
+			"name": "user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "origin",
+						"value": "http://example1.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nom",
+							"value": "Omar",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "origin",
+						"value": "http://example1.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imatge",
+							"type": "file",
+							"src": "/C:/Users/formacio/Pictures/Saved Pictures/564333812032916.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "time",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "origin",
+						"value": "http://example1.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\": \"dgdg\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/time",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"time"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pokemon",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "origin",
+						"value": "http://example1.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imatge",
+							"type": "file",
+							"src": "/C:/Users/formacio/Pictures/Saved Pictures/564333812032916.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/pokemon/41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pokemon",
+						"41"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
