@@ -5,6 +5,7 @@
 // https://carlosazaustre.es/autenticacion-con-token-en-node-js
 //! implementar jsonwebtoken en nodejs
 
+//? https://ull-esit-dsi-1617.github.io/estudiar-las-rutas-en-expressjs-alejandro-raul-35l2/rutasexpressjs.html#routing-api-documentation
 const express = require('express');
 const app = express();
 // const file = require('./CLIENTE/index.html')
@@ -17,15 +18,15 @@ const io = new Server(server);
 
 
 io.on('connection', (socket) => {
-    // console.log('Un usuario se ha conectado');
+    console.log("Un usuari s'ha connectat");
 
     // socket.on('disconnect', () => {
     //     console.log('Un usuario se ha desconectado');
     // })
 
-    // socket.on('chat', (missatge) => {
-    //     console.log("Mensaje:" + missatge)
-    // })
+    socket.on('chat', (missatge) => {
+        console.log("Mensaje:" + missatge)
+    })
 
     socket.on("chat", (missatge) => {
         io.emit("chat", missatge)
@@ -39,9 +40,9 @@ io.on('connection', (socket) => {
 app.get('/', (req, res) => {
     // res.send('<h1> Aplicació de XAT <h1/>')
     // console.log(__dirname);
-    res.sendFile(`${__dirname}/CLIENTE/index.html`)
+    res.sendFile(`${__dirname}/index.html`)
 })
 
-server.listen(3000, () => {
-    console.log('Servidor inicializado en http://localhost:3000')
+server.listen(3001, () => {
+    console.log('Servidor inicializado en http://localhost:3001')
 });
