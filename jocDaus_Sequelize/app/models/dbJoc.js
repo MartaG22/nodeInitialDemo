@@ -12,9 +12,12 @@ app.use(express.json());
 async function connectionDB() {
     try {
         const connection = await mysql.createConnection({
-            host: "localhost",
+            host: '/.env-template',
             user: "root",
             password: "1234",
+            // host: "localhost",
+            // user: "root",
+            // password: "1234",
         });
 
         // Run create database statement

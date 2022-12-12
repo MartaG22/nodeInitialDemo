@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const db = require("./models/dbJoc.js");
 
 const express = require('express');
