@@ -5,3 +5,10 @@
 // El package.json fora de la carpeta app, a la carpeta "base" de cadascun dels projectes (MySQL i Mongo) des d'on es farà npm i i npm start i un .env-template per cada carpeta amb les coses que calguin
 // El package.json fora de les carpetes MySQL i Mongo, amb uns scripts npm run mysql i npm run mongo per executar cadascun dels nivells i un .env-template amb tota la informació (que és el .env que tens ara)
 // Mira de posar una mica d'ordre en això i m'ho torno a mirar 😉
+
+
+//! NIVELL 3
+// Afegeix un endpoint /login que permeti accedir a un administrador
+// amb usuari/ària i contrasenya i retorni un token i fes obligatòria 
+// l'autentificació per JWT en tots els accessos als URL del microservei,
+// fent servir middlewares per validar al token.
