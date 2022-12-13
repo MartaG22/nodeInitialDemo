@@ -5,7 +5,6 @@ const routes = express.Router();
 
 const { dbJugadors, dbJugades } = require('../models/dbJoc.js');
 
-const loginUser = require('../controllers/loginController.js')   //! AFEGIT
 
 const crearJugador = require('../controllers/playersControllers/crearJugador.js');
 const modificarJugador = require('../controllers/playersControllers/modificarJugador.js');
@@ -19,7 +18,6 @@ const llistarRanking = require('../controllers/rankingControllers/llistarRanking
 const mostrarPerdedor = require('../controllers/rankingControllers/mostrarPerdedor.js');
 const mostrarGuanyador = require('../controllers/rankingControllers/mostrarGuanyador.js');
 
-routes.login('/login', loginUser);   //! AFEGIT
 
 routes.post('/players', crearJugador);
 routes.put('/players/:id', modificarJugador);
