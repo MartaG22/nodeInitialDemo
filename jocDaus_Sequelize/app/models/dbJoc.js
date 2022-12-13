@@ -32,9 +32,9 @@ async function connectionDB() {
 }
 
 // Run the Sequelize code to connect to the database
-const sequelize = new Sequelize("dbJugadors", "root", "1234", {
-    host: "localhost",
-    dialect: "mysql",
+const sequelize = new Sequelize(process.env.DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
+    host: process.env.MYSQL_HOST,
+    dialect: process.env.DATABASE,
 });
 
 sequelize.authenticate();
