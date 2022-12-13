@@ -32,7 +32,7 @@ async function connectionDB() {
 }
 
 // Run the Sequelize code to connect to the database
-const sequelize = new Sequelize(process.env.DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
+const sequelize = new Sequelize(process.env.MYSQL_NAME, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
     host: process.env.MYSQL_HOST,
     dialect: process.env.DATABASE,
 });
