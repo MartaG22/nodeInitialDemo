@@ -8,6 +8,14 @@ const mysql = require("mysql2/promise");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
+// Run the Sequelize code to connect to the database
+const sequelize = new Sequelize(process.env.MYSQL_NAME, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
+    host: process.env.MYSQL_HOST,
+    dialect: process.env.DATABASE,
+});
+
+
 // Open the connection to MySQL server
 // https://www.npmjs.com/package/mysql2#using-promise-wrapper
 async function connectionDB() {
@@ -20,9 +28,10 @@ async function connectionDB() {
             // user: "root",
             // password: "1234",
         });
+        
 
         // Run create database statement
-        await connection.query(`CREATE DATABASE IF NOT EXISTS dbJugadors`),
+        await connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_NAME}`),
             (err, results) => {
                 console.log("Results:", results);
             };
@@ -31,11 +40,6 @@ async function connectionDB() {
     }
 }
 
-// Run the Sequelize code to connect to the database
-const sequelize = new Sequelize(process.env.MYSQL_NAME, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
-    host: process.env.MYSQL_HOST,
-    dialect: process.env.DATABASE,
-});
 
 sequelize.authenticate();
 connectionDB()
@@ -43,7 +47,7 @@ connectionDB()
         console.log("CONEXIÓN A LA BASE DE DATOS OK");
     })
     .catch((error) => {
-        console.log("EL ERROR DE CONEXIÓN ES: " + error);
+        console.log("EL ERROR DE CONEXIÓN ES aquiiiiiiii: " + error);
     });
 
 //  Definim model  'JUGADORS':
