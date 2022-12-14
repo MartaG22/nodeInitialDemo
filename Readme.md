@@ -86,12 +86,11 @@ Per executar el projecte amb **Mongoose**:
 
 
 
-> **Step 3** - Inicialitzar el server 
-Per executar el projecte amb **Sequelize**:
+> **Step 3** - Inicialitzar el server en mode desenvolupador.
 
-npm run mysql --> Per executar amb la base de dades MySql.
+npm run devMysql -->  Per executar amb la base de dades **MySql**.
 
-npm run mongo --> Per executar amb la base de dades Mongo.
+npm run devMongo -->  Per executar amb la base de dades **Mongo**.
 
 ### - Iniciar el server amb Mysql:
 
