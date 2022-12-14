@@ -21,12 +21,9 @@ const sequelize = new Sequelize(process.env.MYSQL_NAME, process.env.MYSQL_USER, 
 async function connectionDB() {
     try {
         const connection = await mysql.createConnection({
-            host: process.env.MYSQL_HOST,
-            user: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD,
-            // host: "localhost",
-            // user: "root",
-            // password: "1234",
+            host: process.env.MYSQL_HOST,           // host: "localhost",
+            user: process.env.MYSQL_USER,           // user: "root",
+            password: process.env.MYSQL_PASSWORD,   // password: "1234",
         });
         
 
@@ -34,7 +31,7 @@ async function connectionDB() {
         await connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_NAME}`),
             (err, results) => {
                 console.log("Results:", results);
-            };
+            }
     } catch (err) {
         console.log("Error:", err); //SI NO SE PUEDE CREAR LA DB
     }
@@ -47,10 +44,10 @@ connectionDB()
         console.log("CONEXIÓN A LA BASE DE DATOS OK");
     })
     .catch((error) => {
-        console.log("EL ERROR DE CONEXIÓN ES aquiiiiiiii: " + error);
+        console.log("EL ERROR DE CONEXIÓN ES: " + error);
     });
 
-//  Definim model  'JUGADORS':
+//  Defining model  'JUGADORS':
 const dbJugadors = sequelize.define("Jugadors", {
     idJugador: {
         type: Sequelize.INTEGER,
