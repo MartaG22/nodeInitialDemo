@@ -10,7 +10,8 @@
 // https://github.com/albert688/xat
 
 
-
+//? de app.js =>> va a routes(registre i login(post)) ==>> després passa a CONTROLLERS (on està el registre i el login del USER)
+//? a l'arxiu-carpeta de SOCKETS van els sockets de cada events(el nom del socket en el front ha de coincidir amb el nom del BACK)
 const express = require('express');
 const app = express();
 // const file = require('./CLIENTE/index.html')
