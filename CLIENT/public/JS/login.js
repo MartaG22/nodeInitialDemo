@@ -9,6 +9,9 @@ function login() {
     let password = "1234";
     if(user == usuario && pass == password) {
         alert ("Bienvenido al sistema: " + usuario);
+
+        // ENVIAR DATOS  VALIDADOS  INTRODUCIDOS AL BACK
+
     } else if (user == "" || pass == "") {
         alert ("Por favor, introduce los datos requeridos");
     } else {
