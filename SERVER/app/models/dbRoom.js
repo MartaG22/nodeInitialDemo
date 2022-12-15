@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 
 const sala = new mongoose.Schema(
       {
-            roomName: String,
+            _$oid: {},
+            roomName: {type: String},
             message: [
                   {
-                        sala: { },
-                        usuari: { },
-                        missatge: { },
+                        sala: { type: String},
+                        idUsuari: {type: Number},
+                        missatge: {type: String},
                         time: { type: Date, default: Date.now },
-
                   },
             ],
       },

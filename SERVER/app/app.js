@@ -12,9 +12,20 @@
 
 //? de app.js =>> va a routes(registre i login(post)) ==>> després passa a CONTROLLERS (on està el registre i el login del USER)
 //? a l'arxiu-carpeta de SOCKETS van els sockets de cada events(el nom del socket en el front ha de coincidir amb el nom del BACK)
+
+'use strict';
+
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
-// const file = require('./CLIENTE/index.html')
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+const routes = require('./routes/index_routes.js');
+const PORT = process.env.PORT || 3000;
+
 const http = require('http');
 const server = http.createServer(app);
 
@@ -22,7 +33,9 @@ const server = http.createServer(app);
 const {Server} = require('socket.io');
 const io = new Server(server);
 
+app.use('/', routes);
 
+/*
 io.on('connection', (socket) => {
     // console.log('Un usuario se ha conectado');
 
@@ -40,14 +53,14 @@ io.on('connection', (socket) => {
 
 
 })
+*/
 
 
-
-app.get('/', (req, res) => {
-    // res.send('<h1> Aplicació de XAT <h1/>')
-    // console.log(__dirname);
-    res.sendFile(`${__dirname}/CLIENTE/index.html`)
-})
+// app.get('/', (req, res) => {
+//     // res.send('<h1> Aplicació de XAT <h1/>')
+//     // console.log(__dirname);
+//     res.sendFile(`${__dirname}/CLIENTE/index.html`)
+// })
 
 server.listen(3000, () => {
     console.log('Servidor inicializado en http://localhost:3000')
