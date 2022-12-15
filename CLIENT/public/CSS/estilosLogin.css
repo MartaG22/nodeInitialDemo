@@ -24,7 +24,7 @@ h1{
     width: 50%;
     height: 30%;
     border-radius: 7px;
-    background: rgb(121, 20, 116);
+    background: #822252;
     color: #fff;
 }
 
@@ -59,6 +59,6 @@ h1{
 }
 
 .button:hover {
-    background: #fff;
-    color: rgba(106, 90, 205);
+    background: rgb(205, 111, 186);
+    color: #822252;
 }

@@ -11,7 +11,7 @@
 
 
 //? de app.js =>> va a routes(registre i login(post)) ==>> després passa a CONTROLLERS (on està el registre i el login del USER)
-//? a l'arxiu-carpeta de SOCKETS van els sockets de cada events(el nom del socket en el front ha de coincidir amb el nom del BACK)
+//? a l'arxiu-carpeta de SOCKETS van els sockets de cada   EVENT  (el nom del socket en el front ha de coincidir amb el nom del BACK)
 
 'use strict';
 
@@ -35,6 +35,14 @@ const io = new Server(server);
 
 app.use('/', routes);
 
+
+server.listen(3000, () => {
+    console.log('Servidor inicializado en http://localhost:3000')
+});
+
+
+
+
 /*
 io.on('connection', (socket) => {
     // console.log('Un usuario se ha conectado');
@@ -53,15 +61,11 @@ io.on('connection', (socket) => {
 
 
 })
+
+app.get('/', (req, res) => {
+    // res.send('<h1> Aplicació de XAT <h1/>')
+    // console.log(__dirname);
+    res.sendFile(`${__dirname}/CLIENTE/index.html`)
+})
 */
 
-
-// app.get('/', (req, res) => {
-//     // res.send('<h1> Aplicació de XAT <h1/>')
-//     // console.log(__dirname);
-//     res.sendFile(`${__dirname}/CLIENTE/index.html`)
-// })
-
-server.listen(3000, () => {
-    console.log('Servidor inicializado en http://localhost:3000')
-});

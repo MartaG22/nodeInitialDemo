@@ -9,3 +9,5 @@ const loginUser = require('../controllers/loginUserController.js');
 const createRoom = require('../controllers/createRoomController.js');
 
 routes.post('/newRoom', createRoom);
+
+module.exports = routes
