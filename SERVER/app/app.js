@@ -23,7 +23,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const routes = require('./routes/index_routes.js');
+// const routes = require('./routes/index_routes.js');
 const PORT = process.env.PORT || 3000;
 
 const http = require('http');
@@ -33,7 +33,7 @@ const server = http.createServer(app);
 const {Server} = require('socket.io');
 const io = new Server(server);
 
-app.use('/', routes);
+// app.use('/', routes);
 
 
 server.listen(3000, () => {
