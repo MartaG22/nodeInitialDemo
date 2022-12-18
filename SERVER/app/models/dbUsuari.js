@@ -17,9 +17,9 @@ const usuari = new Schema(
     {
         _$oid: {},
         idUsuari: {type: Number},
-        nomUsuari: {type: String},
+        nomUsuari: {type: String, required: true},
+        passwordUsuari: {type: String, required: true},
         nickUsuari: {type: String},
-        passwordUsuari: {type: String},
         emailUsuari: {type: String}
     },
     { timestamps: true }

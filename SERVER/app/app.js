@@ -23,20 +23,25 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Import and connect to database
+const myDB = require('./models/DB.js');
+myDB();
+
 // const routes = require('./routes/index_routes.js');
 const PORT = process.env.PORT || 3000;
 
 const http = require('http');
 const server = http.createServer(app);
-
-
 const {Server} = require('socket.io');
+
+
+
 const io = new Server(server);
 
 // app.use('/', routes);
 
 
-server.listen(3000, () => {
+server.listen(PORT, () => {
     console.log('Servidor inicializado en http://localhost:3000')
 });
 
