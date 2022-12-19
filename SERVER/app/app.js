@@ -9,43 +9,58 @@
 // https://github.com/JoanUniverse/QuePassaEh  (ejemplo)
 // https://github.com/albert688/xat
 
-
 //? de app.js =>> va a routes(registre i login(post)) ==>> després passa a CONTROLLERS (on està el registre i el login del USER)
 //? a l'arxiu-carpeta de SOCKETS van els sockets de cada   EVENT  (el nom del socket en el front ha de coincidir amb el nom del BACK)
 
-'use strict';
+"use strict";
+//! cors y fetch para coger los datos del FRONT!!!
+// Carlos Herrera UDEMI
+// Motivación en el trabajo
 
-require('dotenv').config();
+// https://www.youtube.com/watch?v=MYqpw0P31ms
+//!CREAR EL SERVIDOR CON EL SOCKET 
 
-const express = require('express');
+
+
+require("dotenv").config();
+
+const express = require("express");
 const app = express();
+const routes = require('./routes/index_routes.js')
+const http = require("http");
+const sockets = require("./sockets/socket.js");
+const myDB = require("./models/DB.js");
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
 // Import and connect to database
-const myDB = require('./models/DB.js');
 myDB();
 
 // const routes = require('./routes/index_routes.js');
-const PORT = process.env.PORT || 3000;
 
-const http = require('http');
 const server = http.createServer(app);
-const {Server} = require('socket.io');
-
-
-
+const { Server } = require("socket.io");
 const io = new Server(server);
 
-// app.use('/', routes);
+sockets(io);
+// io.on("chatMessage", (data) => {
+//     // messages.push(data);
+//     console.log(data);
 
+//     // io.sockets.emit("messages", messages);
+// });
+
+app.use('/', routes);
 
 server.listen(PORT, () => {
-    console.log('Servidor inicializado en http://localhost:3000')
+    console.log("Servidor inicializado en http://localhost:3000");
 });
 
-
+// const SocketIO = require('socket.io');
+// const io = SocketIO.listen(server);
 
 
 /*
@@ -73,4 +88,3 @@ app.get('/', (req, res) => {
     res.sendFile(`${__dirname}/CLIENTE/index.html`)
 })
 */
-
