@@ -9,7 +9,7 @@ io.on("new-message", (data) => {
 
     const user = {
         //! V
-        userId: socket.decoded.userId,
+        userId: socket.decoded.userId,  //data?
         userName: socket.decoded.userName,
     };
 

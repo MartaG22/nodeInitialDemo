@@ -1,90 +1,111 @@
-// https://www.youtube.com/watch?v=p-OevzBqHyQ
-// https://socket.io/get-started/chat
-// https://ull-esit-dsi-1617.github.io/estudiar-las-rutas-en-expressjs-alejandro-raul-35l2/rutasexpressjs.html#using-middleware
-// https://www.oscarblancarteblog.com/2018/01/16/implementar-json-web-tokens-nodejs/
-// https://carlosazaustre.es/autenticacion-con-token-en-node-js
-//! implementar jsonwebtoken en nodejs
-// https://www.youtube.com/watch?v=jD7FnbI76Hg&t=1339s    <<<>>>   https://github.com/xaviercomi/xat   (ejemplo)
-// EJEMPLOS:
-// https://github.com/JoanUniverse/QuePassaEh  (ejemplo)
-// https://github.com/albert688/xat
-
-//? de app.js =>> va a routes(registre i login(post)) ==>> després passa a CONTROLLERS (on està el registre i el login del USER)
-//? a l'arxiu-carpeta de SOCKETS van els sockets de cada   EVENT  (el nom del socket en el front ha de coincidir amb el nom del BACK)
-
-"use strict";
-//! cors y fetch para coger los datos del FRONT!!!
-// Carlos Herrera UDEMI
-// Motivación en el trabajo
-
-// https://www.youtube.com/watch?v=MYqpw0P31ms
-//!CREAR EL SERVIDOR CON EL SOCKET 
-
-
-
 require("dotenv").config();
-
+const cors = require("cors");
 const express = require("express");
 const app = express();
-const routes = require('./routes/index_routes.js')
-const http = require("http");
-const sockets = require("./sockets/socket.js");
-const myDB = require("./models/DB.js");
+
+const http = require("http").Server(app);
+const myDB = require('./models/DB.js');
+const sockets = require("./sockets/sockets");
+const routes = require("./routes/index_routes.js");
 const PORT = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
-
-// Import and connect to database
-myDB();
-
-// const routes = require('./routes/index_routes.js');
-
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-
-sockets(io);
-// io.on("chatMessage", (data) => {
-//     // messages.push(data);
-//     console.log(data);
-
-//     // io.sockets.emit("messages", messages);
-// });
-
-app.use('/', routes);
-
-server.listen(PORT, () => {
-    console.log("Servidor inicializado en http://localhost:3000");
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+  },
 });
 
-// const SocketIO = require('socket.io');
-// const io = SocketIO.listen(server);
+// Connect to database
+myDB();
+
+// Middlewares
+app.use(express.json());
+app.use(cors());
+
+// Routes
+app.use(routes);
+
+// Sockets
+sockets(io);
+
+http.listen(
+  PORT,
+  console.log(`Server listening on port ${PORT}`)
+);
+
+
+
+
+
+
 
 
 /*
-io.on('connection', (socket) => {
-    // console.log('Un usuario se ha conectado');
-
-    // socket.on('disconnect', () => {
-    //     console.log('Un usuario se ha desconectado');
-    // })
-
-    // socket.on('chat', (missatge) => {
-    //     console.log("Mensaje:" + missatge)
-    // })
-
-    socket.on("chat", (missatge) => {
-        io.emit("chat", missatge)
-    })
+require("dotenv").config();
+const cors = require("cors");
+const express = require("express");
+const app = express();
+const http = require("http").Server(app);
+const connectDB = require("./database/connectDB");
+const sockets = require("./sockets/sockets");
+const routes = require("./routes/routes");
 
 
-})
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+  },
+});
 
-app.get('/', (req, res) => {
-    // res.send('<h1> Aplicació de XAT <h1/>')
-    // console.log(__dirname);
-    res.sendFile(`${__dirname}/CLIENTE/index.html`)
-})
+// Connect to database
+connectDB();
+
+// Middlewares
+app.use(express.json());
+app.use(cors());
+
+// Routes
+app.use(routes);
+
+// Sockets
+sockets(io);
+
+PORT = process.env.SERVER_PORT || 3000;
+http.listen(
+  PORT,
+  console.log(`Server listening on port ${process.env.SERVER_PORT}`)
+);
 */
+
+
+// const express = require('express');
+// const app = express();
+// const server = require('http').Server(app);
+
+// const cors = require('cors');
+// const routes = require('./routes/index_routes.js');
+// const db = require('./models/DB');
+
+// const io = require('socket.io')(server, {
+//   cors: {
+//     origin: 'http://localhost:8080',
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['my-custom-header'],
+//     credentials: true,
+//   }
+// });
+
+// require('./sockets/NOOsocket.js')(io);
+
+// app.use(cors());
+
+// app.set('port', process.env.PORT || 3000);
+
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(routes);
+
+// server.listen(app.get('port'), () => {
+//   console.log('Server listening in port :', app.get('port'));
+// });
