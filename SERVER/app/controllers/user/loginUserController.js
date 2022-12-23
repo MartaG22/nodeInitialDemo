@@ -8,3 +8,9 @@ const Usuari = require('../../models/dbUsuari.js')
 const jwt = require('jsonwebtoken');
 console.log(Usuari);
 
+const loginUser = async (req, res) => {
+      const userName = req.body;
+      console.log(userName);
+}
+
+module.exports = loginUser;
