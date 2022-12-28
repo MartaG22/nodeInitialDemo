@@ -1,68 +1,19 @@
-// const Jugador = require('../../models/dbJugador.js');
-const User = require('../../models/dbUsuari.js');
-console.log("User",User);
+// bcript y hash para guardar la CONTRASEÑA ENCRIPTADA!!!
 
-const retisterUser = async (req, res) => {
-    // Crear jugadors
-
-    console.log("Introdueix el nom del nou Jugador:");
-    console.log("jugador", req.body.nomJugador);
-    const nom = req.body.nomJugador;
-    console.log(nom);
-    const quantitatJugadors = await Jugador.count({});
-    console.log('quantitatJugadors:', quantitatJugadors);
-
-    if (!nom || nom == 'ANÒNIM') {
-
-        try {
-            const jugadorAnonim = await Jugador.create(  { idJugador: quantitatJugadors +1, nomJugador: "ANÒNIM" });
-            jugadorAnonim.save();
-
-            console.log(`Jugador creat com a  "${jugadorAnonim.nomJugador}"`) ;
-            res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
-
-        } catch (error) {
-            res.status(400).json(error);
-        }
-    } else {
-        try {
-            const jugador = await Jugador.findOne({ nomJugador: nom });   // Validació per trobar si existeix un jugador amb el nom introduit
-
-            if (jugador) {
-                console.log("Aquest jugador ja existeix");
-                res.status(400).json({ "Error": "Aquest jugador ja existeix!" });
-
-            } else {
-                const nouJugador = await Jugador.create({  idJugador: quantitatJugadors +1, nomJugador: nom });
-                nouJugador.save();
-
-                console.log("Jugador creat amb èxit");
-                res.status(200).json(`S'ha creat el jugador: ${nouJugador.nomJugador}`);
-            };
-        } catch (error) {
-            res.status(400).send(error);
-        };
-    };
-};
-
-module.exports = retisterUser;
+// el TOKEN se puede guardar en la base de datos (y podría haber varios uruarios con el mismo nombre)
+// Si no se guarda en la base de datos,  tiene que combrobar que sea usuario único
 
 
+const Usuari = require('../../models/dbUsuari.js')
+const jwt = require('jsonwebtoken');
+console.log(Usuari);
 
-// const Usuari = require('../../models/dbUsuari.js')
-// const jwt = require('jsonwebtoken');
-// console.log(Usuari);
+const registerUser = async (req, res) => {
+      const user = req.body;
+      console.log("USER", user);
+      
+      // Es graba l'usuari a la base de dades!!!
+      await Usuari.create({ nomUsuari: user.userName, passwordUsuari: user.password})
+}
 
-
-// const registerUser = async (req, res) => {
-//     try {
-//         const { nomUsuari, nickUsuari, passwordUsuari, emailUsuari} = req.body;
-        
-//         // VALIDACIONS
-
-
-
-//     } catch (error) {
-//         res.status
-//     }
-// }
+module.exports = registerUser;

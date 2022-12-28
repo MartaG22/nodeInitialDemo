@@ -30,7 +30,7 @@ app.use(express.static(`${__dirname}/public`))
 
 
 app.get('/', (req, res) => {
-      res.sendFile(path.join(`${__dirname}/public/HTML/login.html`));
+      res.sendFile(path.join(`${__dirname}/public/HTML/register.html`));
 })
 
 

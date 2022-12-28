@@ -19,8 +19,8 @@ const usuari = new Schema(
         idUsuari: {type: Number},
         nomUsuari: {type: String, required: true},
         passwordUsuari: {type: String, required: true},
-        nickUsuari: {type: String},
-        emailUsuari: {type: String}
+        // nickUsuari: {type: String},
+        // emailUsuari: {type: String}
     },
     { timestamps: true }
 );

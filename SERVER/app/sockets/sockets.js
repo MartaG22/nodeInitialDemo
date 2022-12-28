@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const registerUserController = require("../controllers/user/registerUserController.js");
-const loginUserController = require("../controllers/user/loginUserController.js");
+const registerUserController = require("../controllers/user/loginUserController.js");
+const loginUserController = require("../controllers/user/registerUserController.js");
 const createRoomController = require("../controllers/room/createRoomController.js");
 
 // const SocketIO = require("socket.io");
@@ -9,7 +9,7 @@ const createRoomController = require("../controllers/room/createRoomController.j
 const sockets = async (io) => {
     io.on("new-message", (data) => {
         // messages.push(data);
-        console.log(data);
+        console.log("DATA", data);
 
         const user = {
             //! V
