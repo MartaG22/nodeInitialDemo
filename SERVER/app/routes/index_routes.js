@@ -13,4 +13,4 @@ routes.post('/register', registerUser)
 // routes.post('/newUser', registerUser)
 // routes.post('/newRoom', createRoom);
 
-module.exports = routes
+module.exports = routes;

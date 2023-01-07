@@ -10,24 +10,25 @@ const socket = io();
 let message = document.getElementById('message');
 console.log(message)
 let username = document.getElementById('username');
-let btn = document.getElementById('send');
+let sendMessage = document.getElementById('send');
 let output = document.getElementById('output');
 let actions = document.getElementById('actions');
 
 
-btn.addEventListener('click', function() { 
+sendMessage.addEventListener('click', () => { 
       socket.emit('chatMessage', {
             message: message.value,
-            username: username.value
+            username: username.value,
+            // room: roomname,
       })
       console.log(username.value, message.value);
 });
 
-message.addEventListener('keypress', function () {
+message.addEventListener('keypress', () => {
       socket.emit('chatTyping', username.value)
 })
 
-socket.on('chatMessage', function(data) {
+socket.on('chatMessage', (data) => {
       output.innerHTML += `<p> <strong>${data.username}</strong>: ${data.message}</p>`
 });
 

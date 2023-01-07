@@ -1,71 +1,60 @@
-// https://www.youtube.com/watch?v=C8xJyQGe6RA
-// https://lenguajejs.com/javascript/eventos/addeventlistener/      //! ADDEVENTLISTENER
-// https://www.youtube.com/watch?v=l8QD6BE24FU
-// document.querySelector('form').addEventListener("submit", (e) => {
-//     e.preventDefault();
-// document.getElementById("btnLogin").addEventListener("submit", )
+// const newPage = require("../HTML/xat.html");
+// const fetch = require('cross-fetch');
 
-function register() {
-    let userName = document.getElementById("usuario").value;
-    let password = document.getElementById("pass").value;
+// const { response } = require("express");
+
+
+document.querySelector(".entry-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    sessionStorage.clear();
+    //     let userName = document.getElementById("usuario").value;
+    //     let password = document.getElementById("pass").value;
+    const userName = document.querySelector('.entry-form [name="usuario"]').value;
+    const password = document.querySelector('.entry-form [name="pass"]').value;
+
     console.log("userName:", userName, "password:", password);
     const apiURL = "http://localhost:3000"; // Conectem amb el SERVER
-    // alert(`Validando función + ${userName} + ${pass}`);
-    // window.location.replace("../HTML/xat.html");
 
-    if (!userName) {
-        console.log("NO HAS INTRODUCIDO NOMBRE");
-    }
+    if (!userName && !password) {
+        console.log("NO HAS INTRODUCIDO DATOS"); 
+        return;
+    };
+    if (!userName){
+        console.log('NO HAS INTRODUCIDO NOMBRE');
+        return;
+    };
     if (!password) {
         console.log("NO HAS INTRODUCIDO CONSTRASEÑA");
-    }
-    if (userName && password) {
-        fetch(apiURL + "/register", {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userName, password }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.status === "ok") {
-                    // console.log(data);
-                    console.log("EXITO!!!");
-                    // require("../HTML/xat");
-                    window.location.replace("../HTML/xat.html");
+        return;
+    };
+    
+    // window.location.replace('../HTML/xat.html')
 
-                    // console.log("Bienvenido al sistema: " + usuarioDB);
-                } else {
-                    // console.log(data);
 
-                    console.log("ERROR");
-                    // let usuarioDB = "Marta";
-                    // let passwordDB = "1234";
 
-                    // if (userName == usuarioDB && password == passwordDB) {
-                    // if (userName == 'Marta' && password == 1234) {
-                    //     // require('../HTML/xat.html')
-                    //     require("../HTML/xat");
-                    //     console.log("Bienvenido al sistema: " + usuarioDB);
-                    //     window.location.replace("../HTML/xat.html");
-                    // ENVIAR DATOS  VALIDADOS  INTRODUCIDOS AL BACK
+    //! NO FUNCIONA BIEN EL FETCH
+    // fetch('http://localhost:3000/register', {
+    fetch(apiURL + '/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify ({userName, password})
+    })
+    .then(response => { response.json()})
+        // window.location.replace('../HTML/xat.html');  //! LA VENTANTA TENDRÍA QUE LLAMARSE AQUÍ
+    //  res.json()})
+    .then(data => {
+            console.log('Success:', data)
+            window.location.replace('../HTML/xat.html')  //! LA VENTANTA TENDRÍA QUE LLAMARSE AQUÍ
+        // if (json.status === 'ok') {
+        //     // require('../HTML/')
+        //     window.location.replace('../HTML/xat.html')  //! LA VENTANTA TENDRÍA QUE LLAMARSE AQUÍ
+        // } else {
+        //     registerError.innerHTML = data.message;
+        // }
+    }).catch(console.error('Error: ', error.message)); 
+    // => registerError.innerHTML = err.message);
 
-                    // } else if (userName == "" || password == "") {
-                    //     console.log ("Por favor, introduce los datos requeridos");
-                    // } else {
-                    //     console.log ("Usuario y/o contraseña no válidos");
-                }
-            })
-            .catch((error) => console.log(error.message));
-        // document.getElementById('login-error').innerHTML = error.message);
-    }
-}
 
-// fetch(request)
-// .then(response => {
-//     if (!response.ok) throw Error(response.status);
 
-//     return response;
-// })
-// .then(response => console.log("ok"))
-// .catch(error => console.log(error));
-// //en catch decidimos que hacer con el error, aquí recibimos response.status
+});

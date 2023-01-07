@@ -7,13 +7,19 @@ const http = require("http").Server(app);
 const myDB = require('./models/DB.js');
 const sockets = require("./sockets/sockets");
 const routes = require("./routes/index_routes.js");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.SERVER_PORT || 3000;
+
+const CLIENT_HOST = process.env.CLIENT_HOST;
+const CLIENT_PORT = process.env.CLIENT_PORT;
+
 
 
 const io = require("socket.io")(http, {
   cors: {
-    origin: "*",
-  },
+    // origin: "*",
+    origins: [`http://${CLIENT_HOST}:${CLIENT_PORT}`,
+    `ws://${CLIENT_HOST}:${CLIENT_PORT}`]},
+
 });
 
 // Connect to database
