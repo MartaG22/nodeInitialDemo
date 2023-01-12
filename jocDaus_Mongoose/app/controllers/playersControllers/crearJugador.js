@@ -40,7 +40,7 @@ const crearJugador = async (req, res) => {
                 res.status(200).json(`S'ha creat el jugador: ${nouJugador.nomJugador}`);
             };
         } catch (error) {
-            res.status(400).send(error);
+            res.status(400).json(error);
         };
     };
 };

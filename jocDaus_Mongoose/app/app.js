@@ -2,7 +2,11 @@
 
 require('dotenv').config();
 const mongoose = require('mongoose');
-const db = require("./models/dbJugador.js");
+const db = require('./models/db.js')
+// const db = require("./models/dbJugador.js");
+
+// Connect to database
+db();
 
 const express = require('express');
 const app = express();

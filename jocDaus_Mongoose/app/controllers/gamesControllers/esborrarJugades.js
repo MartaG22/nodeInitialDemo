@@ -4,6 +4,7 @@ const Jugada = require('../../models/dbjugada.js');
 const esborrarJugades = async (req, res) => {
     // elimina les tirades d'un jugador/a.
 
+    const missatge = {};
     const id = req.params.id;
 
     try {
@@ -23,13 +24,17 @@ const esborrarJugades = async (req, res) => {
             const quantitatJugades = await Jugada.count({ idJugador: idJugadorTrobat });
             await Jugada.deleteMany({ idJugador: idJugadorTrobat });
 
-            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
-            const missatge = `S'han esborrat amb èxit ${quantitatJugades} jugades del jugador amb ID ${idJugadorTrobat}`;
-            res.status(200).send(dadesJugador + missatge);
+            const dadesJugador = {
+                'ID Jugador:': idJugadorTrobat,
+                'Nom Jugador:': dadesJugadorTrobat.nomJugador,
+                "S'han esborrat amb èxit:": `${quantitatJugades} jugades d'aquest jugador`
+            }
+            
+            res.status(200).json(dadesJugador)
 
         }
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     };
 };
 

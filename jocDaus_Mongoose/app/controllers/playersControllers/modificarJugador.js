@@ -18,7 +18,7 @@ const modificarJugador = async (req, res) => {
                 res.status(400).json({ Error: "Aquest jugador no existeix!" });
 
             } catch (error) {
-                res.status(400).send(error);
+                res.status(400).json(error);
             };
 
         } else {
@@ -44,11 +44,11 @@ const modificarJugador = async (req, res) => {
                 };
 
             } catch (error) {
-                res.status(400).send(error);
+                res.status(400).json(error);
             };
         };
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     };
 };
 

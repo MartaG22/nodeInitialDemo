@@ -3,8 +3,8 @@
 
 // Molt ben fet, Marta! Ara he aconseguit provar-ho tot:
 
-// TODO [] ** El .env hauria d'estar exclòs del repo (com a bona pràctica, perquè normalment contenen informació privada) i li hauries de fer una copia de l'estil .env-template perquè l'usuari vegi què ha de posar. 
-    // I ojo, que el nom de la DB de Mongo segueix hardcoded, no l'agafa de l'arxiu ❗
+// TODO [x] ** El .env hauria d'estar exclòs del repo (com a bona pràctica, perquè normalment contenen informació privada) i li hauries de fer una copia de l'estil .env-template perquè l'usuari vegi què ha de posar. 
+// TODO [x] ** I ojo, que el nom de la DB de Mongo segueix hardcoded, no l'agafa de l'arxiu ❗
 // TODO []  Al arrencar amb MySQL no ha creat la base de dades, l'he hagut de reiniciar un parell de vegades perquè la creés i li afegís les taules (un problema de sincronia al crear-la?)
 // TODO [] ** Els endpoints funcionen, però tens moltes respostes que no són JSON. Totes les respostes del servidor haurien de ser en format JSON (és la cosa més important que heu de treure d'aquests exercicis) ❗
 // TODO [] ** El /players retorna un body buit quan no hi ha jugadors encara. Hauria de retornar un JSON dient que encara no hi ha jugadors ❗

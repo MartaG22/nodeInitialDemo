@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const db = require('./db.js')
 
-mongoose.connect('mongodb://localhost:27017/jocDaus')
+// mongoose.connect('mongodb://localhost:27017/jocDaus')
 
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-db.on('error', function (err) {
-  console.log('connection error', err)
-})
+// db.on('error', function (err) {
+//   console.log('connection error', err)
+// })
 
-db.once('open', function () {
-  console.log('Connection to DB successful')
-})
+// db.once('open', function () {
+//   console.log('Connection to DB successful')
+// })
 
 const jugador = new Schema(
   {
@@ -25,4 +26,7 @@ const jugador = new Schema(
 
 );
 
-module.exports = mongoose.model('Jugador', jugador);
+
+const Jugador = mongoose.model('Jugador', jugador);
+
+module.exports = Jugador;

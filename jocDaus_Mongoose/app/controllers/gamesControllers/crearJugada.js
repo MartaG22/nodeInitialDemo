@@ -59,11 +59,11 @@ const crearJugada = async (req, res) => {
 
             const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
             const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
-            res.status(200).send(dadesJugador + missatge);
+            res.status(200).json(dadesJugador + missatge);
         };
 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     };
 };
 
