@@ -1,0 +1,25 @@
+{
+  "name": "nodeinitialdemo",
+  "version": "1.0.0",
+  "description": "sample project for node",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app/app.js",
+    "dev": "nodemon app/app.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.8.0",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.7"
+  }
+}
