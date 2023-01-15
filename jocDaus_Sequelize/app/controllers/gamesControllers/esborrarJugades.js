@@ -3,6 +3,8 @@ const {dbJugadors, dbJugades} = require('../../models/dbJoc');
 const esborrarJugades = async (req, res) => {
     // elimina les tirades d'un jugador/a.
 
+
+    const missatge = {};
     const id = req.params.id;
 
     try {
@@ -21,13 +23,20 @@ const esborrarJugades = async (req, res) => {
             await dadesJugadorTrobat.update({ tiradesJugador: 0,  tiradesGuanyades: 0, percentatgeExit: 0 } );
             const jugades = await dbJugades.destroy({ where: { JugadorIdJugador: idJugadorTrobat } });
 
-            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
-            const missatge = `S'han esborrat amb èxit ${jugades} jugades del jugador amb ID ${idJugadorTrobat}`;
-            res.status(200).send(dadesJugador + missatge);
+            // const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n \n`;
+            // const missatge = `S'han esborrat amb èxit ${jugades} jugades del jugador amb ID ${idJugadorTrobat}`;
+            
+            const dadesJugador = {
+                'ID Jugador:': idJugadorTrobat,
+                'Nom Jugador:': dadesJugadorTrobat.nomJugador,
+                "S'han esborrat amb èxit:": `${jugades} jugades d'aquest jugador`
+            }
+
+            res.status(200).json(dadesJugador);
 
         }
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     };
 };
 

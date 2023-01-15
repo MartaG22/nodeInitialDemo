@@ -38,13 +38,13 @@ async function connectionDB() {
 }
 
 
-sequelize.authenticate();
-connectionDB()
+connectionDB();
+sequelize.authenticate()
     .then(() => {
-        console.log("CONEXIÓN A LA BASE DE DATOS OK");
+        console.log("CONEXIÓ A LA BASE DE DADES OK");
     })
     .catch((error) => {
-        console.log("EL ERROR DE CONEXIÓN ES: " + error);
+        console.log("EL ERROR DE CONEXIÓ ES: " + error);
     });
 
 //  Defining model  'JUGADORS':

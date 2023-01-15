@@ -21,20 +21,39 @@ const llistarJugades =  async (req, res) => {
             console.log("jugador Trobat:", dadesJugadorTrobat.nomJugador);
 
             const jugades = await dbJugades.findAll({ where: { JugadorIdJugador: idJugadorTrobat } });
-            const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n`;
+            // const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n`;
 
-            let missatgePercentatge = `Percentatge d'èxit: ${dadesJugadorTrobat.percentatgeExit}% \n \n`
-            let missatgeTirades = "";
+            // let missatgePercentatge = `Percentatge d'èxit: ${dadesJugadorTrobat.percentatgeExit}% \n \n`
+            // let missatgeTirades = "";
 
+            
+            let tirades = [];
             for (let i = 0; i < jugades.length; i++) {
                 let jugadaActual = jugades[i];
-                missatgeTirades += `TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`;
+                // missatgeTirades += `TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`;
+                
+                tirada = {
+                    'TIRADA': i + 1,
+                    'Dau 1:': jugadaActual.tiradaDau1,
+                    'Dau 2:': jugadaActual.tiradaDau2,
+                    'Partida guanyada:': jugadaActual.partidaGuanyada
+                }
+                tirades.push(tirada)
+
             };
 
-            res.status(200).send(dadesJugador + missatgePercentatge + missatgeTirades);
+            const dadesJugador = {
+                "ID Jugador:": idJugadorTrobat,
+                "Nom Jugador:": dadesJugadorTrobat.nomJugador,
+                "Percentatge d'èxit:": dadesJugadorTrobat.percentatgeExit,
+                "TIRADES:": tirades
+            };
+
+            res.status(200).json(dadesJugador);
         };
+        
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     };
 };
 
