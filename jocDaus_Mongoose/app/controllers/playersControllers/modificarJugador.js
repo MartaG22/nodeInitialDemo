@@ -40,7 +40,7 @@ const modificarJugador = async (req, res) => {
                 } else {   // TODO falta ensenyar el nom  del jugador modificat / NO L'ENSENYA BÉ, ENCARA QUE CANVIA EL NOM
                     await jugadorAModificar.updateOne({ nomJugador: nouNomJugador });
 
-                    res.status(200).json(`Nom del jugador modificat amb èxit.  Nou nom:  ${jugadorAModificar.nomJugador}`);
+                    res.status(200).json(`Nom del jugador modificat amb èxit.  Nou nom:  ${nouNomJugador}`);
                 };
 
             } catch (error) {

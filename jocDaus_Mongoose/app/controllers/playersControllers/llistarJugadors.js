@@ -15,6 +15,7 @@ const llistarJugadors = async (req, res) => {
             jugador = {
                 'ID Jugador:': jugador.idJugador,
                 'Nom Jugador:': jugador.nomJugador,
+                "Quantitat de Tirades:": jugador.tiradesJugador,
                 "Percentatge d'èxit:": jugador.percentatgeExit
             };
 

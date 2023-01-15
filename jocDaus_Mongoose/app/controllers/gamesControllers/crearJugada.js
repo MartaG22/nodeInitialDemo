@@ -57,9 +57,30 @@ const crearJugada = async (req, res) => {
                 }
             )
 
-            const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
-            const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
-            res.status(200).json(dadesJugador + missatge);
+
+            const dadesJugador = {
+                'ID Jugador:': jugadorTrobat.idJugador,
+                'Nom Jugador:': jugadorTrobat.nomJugador,
+                'DAU 1:': tiradaDaus.tiradaDau1,
+                'DAU 2:': tiradaDaus.tiradaDau2,
+                'Partida guanyada:': tiradaDaus.resultatJugada,
+                // "Percentatge d'èxit:": jugadorTrobat.percentatgeExit
+            };
+
+
+
+            // const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
+            // const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
+            res.status(200).json(dadesJugador)
+            // res.status(200).send(dadesJugador + missatge)
+                // + missatge);
+
+
+
+
+            // const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
+            // const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
+            // res.status(200).json(dadesJugador + missatge);
         };
 
     } catch (error) {
