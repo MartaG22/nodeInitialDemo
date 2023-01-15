@@ -19,11 +19,11 @@ const llistarRanking = async (req, res) => {
             const dadesJugador = {
                 "ID Jugador:": jugador.idJugador,
                 "Nom Jugador:": jugador.nomJugador,
-                "Percentatge d'èxit:": jugador.percentatgeExit,
+                "Percentatge d'èxit:": `${jugador.percentatgeExit} %`,
                 // "TIRADES:": tirades
             };
 
-            missatge.push(dadesJugador)
+            missatge.push(dadesJugador);
         }
         );
 
