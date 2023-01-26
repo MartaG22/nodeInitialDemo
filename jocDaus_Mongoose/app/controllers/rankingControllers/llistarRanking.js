@@ -14,13 +14,12 @@ const llistarRanking = async (req, res) => {
         const llistatOrdenat =  await Jugador.find().sort({ percentatgeExit: -1})
         llistatOrdenat.forEach(jugador => {
             sumaPercentatges += jugador.percentatgeExit;
-            // missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit}% \n \n`
 
             const dadesJugador = {
                 "ID Jugador:": jugador.idJugador,
                 "Nom Jugador:": jugador.nomJugador,
                 "Percentatge d'èxit:": `${jugador.percentatgeExit} %`,
-                // "TIRADES:": tirades
+
             };
 
             missatge.push(dadesJugador);
@@ -34,9 +33,10 @@ const llistarRanking = async (req, res) => {
         missatge.push({"PERCENTATGE D'ÈXIT MIG DE TOTS ELS JUGADORS:": `${percentatgeMig} %`})
 
         console.log(missatge);
-        res.status(200).json(missatge);
+        res.status(200).json({"RANKING:": missatge});
+
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({error});
     };
 
 };

@@ -26,9 +26,9 @@ const mostrarPerdedor = async (req, res) => {
             missatge.push(perdedor);
         })
 
-        res.status(200).json(missatge);
+        res.status(200).json({"PERDEDOR:": missatge});
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     };
 
 };

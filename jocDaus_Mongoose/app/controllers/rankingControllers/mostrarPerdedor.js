@@ -23,7 +23,6 @@ const mostrarPerdedor = async (req, res) => {
 
 
         // BUSQUEM EMPATS:
-        // const quantitatJugadors = llistatOrdenat.length;
         llistatOrdenat.forEach((jugador) => {
             const idJugadorActual = jugador.idJugador;
             const percentatgeJugadorActual = jugador.percentatgeExit;
@@ -31,8 +30,6 @@ const mostrarPerdedor = async (req, res) => {
                 idJugadorActual != jugadorPerdedor.idJugador &&
                 percentatgeJugadorActual === jugadorPerdedor.percentatgeExit
             ) {
-                // console.log("OTRO JUGADOR" , jugador.nomJugador);
-                // missatge += `GUANYADOR:  \n ID Jugador: ${jugador.idJugador} \n Nom Jugador: ${jugador.nomJugador} \n Percentatge d'èxit: ${jugador.percentatgeExit}% \n \n`;
 
                 perdedor = {
                         "ID Jugador:": jugador.idJugador,
@@ -47,30 +44,9 @@ const mostrarPerdedor = async (req, res) => {
         });
 
 
-        // await Jugador.find().sort({
-        //     percentatgeExit: 1
-        // }).then((llistatOrdenat) => {
-        //     const perdedor = llistatOrdenat[0];
-        //     console.log("MIN:", llistatOrdenat[0]);
-        //     missatge += `PERDEDOR:  \n ID Jugador: ${perdedor.idJugador} \n Nom Jugador: ${perdedor.nomJugador} \n Percentatge d'èxit: ${perdedor.percentatgeExit}% \n \n`
-
-
-        //     const quantitatJugadors = llistatOrdenat.length;  // BUSQUEM EMPATS:
-        //     llistatOrdenat.forEach(jugador => {
-        //         const idJugadorActual = jugador.idJugador;
-        //         const percentatgeJugadorActual = jugador.percentatgeExit;
-        //         if (idJugadorActual != perdedor.idJugador && percentatgeJugadorActual === perdedor.percentatgeExit) {
-        //             console.log(jugador.nomJugador);
-        //             missatge += `PERDEDOR:  \n ID Jugador: ${jugador.idJugador} \n Nom Jugador: ${jugador.nomJugador} \n Percentatge d'èxit: ${jugador.percentatgeExit}% \n \n`
-
-        //         }
-        //     });
-
-        // });
-
-        res.status(200).json(missatge);
+        res.status(200).json({"PERDEDOR": missatge});
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     };
 
 };

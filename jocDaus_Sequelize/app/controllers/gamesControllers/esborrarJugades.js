@@ -32,11 +32,11 @@ const esborrarJugades = async (req, res) => {
                 "S'han esborrat amb èxit:": `${jugades} jugades d'aquest jugador`
             }
 
-            res.status(200).json(dadesJugador);
+            res.status(200).json({"Dades Jugador:": dadesJugador});
 
         }
-    } catch (error) {
-        res.status(400).json(error);
+    } catch (Error) {
+        res.status(400).json({"Error:": Error});
     };
 };
 

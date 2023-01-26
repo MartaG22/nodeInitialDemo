@@ -40,7 +40,7 @@ const crearJugada = async (req, res) => {
             await jugadorTrobat.update({ tiradesJugador: tiradesPerJugador });
 
             if (tiradaDaus.resultatJugada === true) {
-                console.log(`El jugador ${jugadorTrobat.nomJugador} ha guanyat aquesta tirada!`)
+                console.log({"Jugador:": `El jugador ${jugadorTrobat.nomJugador} ha guanyat aquesta tirada!`})
 
                 await jugadorTrobat.update(
                     {
@@ -61,7 +61,6 @@ const crearJugada = async (req, res) => {
                 }
             );
 
-            // const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
             const dadesJugador = {
                 'ID Jugador:': jugadorTrobat.idJugador,
                 'Nom Jugador:': jugadorTrobat.nomJugador,
@@ -71,14 +70,12 @@ const crearJugada = async (req, res) => {
                 // "Percentatge d'èxit:": jugadorTrobat.percentatgeExit
             };
 
-            // const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
-            res.status(200).json(dadesJugador)
-                // + missatge);
+            res.status(200).json({"Dades Jugador:": dadesJugador})
 
         };
 
-    } catch (error) {
-        res.status(400).json(error);
+    } catch ({Error}) {
+        res.status(400).json({"Error:": Error});
     };
 };
 

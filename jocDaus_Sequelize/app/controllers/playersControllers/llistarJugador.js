@@ -7,13 +7,12 @@ const llistarJugador = async (req, res) => {
     try {
         const llistatJugadors = await dbJugadors.findAll({})
         if (llistatJugadors.length == 0) {
-            return res.status(200).json("Encara no hi ha jugadors enregistrats!");
+            return res.status(400).json({"Error:": "Encara no hi ha jugadors enregistrats!"});
         }
 
 
         llistatJugadors.forEach(
             jugador => {
-                // missatge += `ID Jugador: ${jugador.idJugador} \nNom Jugador: ${jugador.nomJugador} \nPercentatge d'èxit: ${jugador.percentatgeExit} % \n \n`
                 jugador = {
                     'ID Jugador:': jugador.idJugador,
                     'Nom Jugador:': jugador.nomJugador,
@@ -27,9 +26,9 @@ const llistarJugador = async (req, res) => {
         );
 
         console.log(missatge);
-        res.status(200).json(missatge);
-    } catch (error) {
-        res.status(400).json(error);
+        res.status(200).json({"Jugadors:": missatge});
+    } catch (Error) {
+        res.status(400).json({"Error:": Error});
     };
 
 };

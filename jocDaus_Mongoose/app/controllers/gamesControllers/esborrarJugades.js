@@ -12,7 +12,6 @@ const esborrarJugades = async (req, res) => {
         console.log('***dadesJugadorTrobat:***', dadesJugadorTrobat);
 
         if (dadesJugadorTrobat == null) {
-            console.log("El valor de l'ID introduit no existeix!");
             res.status(400).json({ Error: "Aquest jugador no existeix!" });
 
         } else {
@@ -30,11 +29,11 @@ const esborrarJugades = async (req, res) => {
                 "S'han esborrat amb èxit:": `${quantitatJugades} jugades d'aquest jugador`
             }
             
-            res.status(200).json(dadesJugador)
+            res.status(200).json({"Dades Jugador:": dadesJugador})
 
         }
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     };
 };
 

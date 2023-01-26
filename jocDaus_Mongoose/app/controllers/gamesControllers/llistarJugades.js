@@ -20,19 +20,11 @@ const llistarJugades = async (req, res) => {
             console.log("jugador Trobat:", dadesJugadorTrobat.nomJugador);
 
             const jugades = await Jugada.find({ idJugador: idJugadorTrobat });
-            // const dadesJugador = `ID Jugador: ${idJugadorTrobat}  \nNom Jugador: ${dadesJugadorTrobat.nomJugador} \n`;
-            console.log("jugades", jugades);
 
-            // let missatgePercentatge = {
-            //     "Percentatge d'èxit:": dadesJugadorTrobat.percentatgeExit
-            // }
-
-            // // let tirada = {};
             let tirades = [];
             for (let i = 0; i < jugades.length; i++) {
                 let jugadaActual = jugades[i];
                 console.log('jugadaActual', jugadaActual);
-                //     // missatgeTirades += `TIRADA  ${i + 1}: \n Dau 1: ${jugadaActual.tiradaDau1} \n Dau 2: ${jugadaActual.tiradaDau2} \n Partida guanyada: ${jugadaActual.partidaGuanyada}  \n \n`;
 
                     tirada = {
                         'TIRADA': i + 1,
@@ -51,11 +43,11 @@ const llistarJugades = async (req, res) => {
                 "TIRADES:": tirades
             };
 
-            res.status(200).json(dadesJugador);
+            res.status(200).json({"Dades Jugador:": dadesJugador});
             // dadesJugador + missatgePercentatge + missatgeTirades);
         }
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     }
 };
 

@@ -18,7 +18,7 @@ const modificarJugador = async (req, res) => {
                 res.status(400).json({ Error: "Aquest jugador no existeix!" });
 
             } catch (error) {
-                res.status(400).json(error);
+                res.status(400).json({error});
             };
 
         } else {
@@ -35,20 +35,20 @@ const modificarJugador = async (req, res) => {
                     const jugadorAnonim = await jugadorAModificar.updateOne({ nomJugador: "ANÒNIM" });
                     jugadorAnonim.save();
                     console.log("Jugador creat com a 'ANÒNIM'!");
-                    res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
+                    res.status(200).json({"Jugador:": `Jugador creat com a '${jugadorAnonim.nomJugador}'!`});
 
                 } else {   // TODO falta ensenyar el nom  del jugador modificat / NO L'ENSENYA BÉ, ENCARA QUE CANVIA EL NOM
                     await jugadorAModificar.updateOne({ nomJugador: nouNomJugador });
 
-                    res.status(200).json(`Nom del jugador modificat amb èxit.  Nou nom:  ${nouNomJugador}`);
+                    res.status(200).json({"Jugador": `Nom del jugador modificat amb èxit.  Nou nom:  ${nouNomJugador}`});
                 };
 
             } catch (error) {
-                res.status(400).json(error);
+                res.status(400).json({error});
             };
         };
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     };
 };
 

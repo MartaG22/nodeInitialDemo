@@ -49,11 +49,11 @@ const llistarJugades =  async (req, res) => {
                 "TIRADES:": tirades
             };
 
-            res.status(200).json(dadesJugador);
+            res.status(200).json({"Dades Jugador:": dadesJugador});
         };
         
-    } catch (error) {
-        res.status(400).json(error);
+    } catch (Error) {
+        res.status(400).json({"Error:": Error});
     };
 };
 

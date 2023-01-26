@@ -18,11 +18,6 @@ const crearJugada = async (req, res) => {
         } else {
         
             const tiradaDaus = tiroDaus();
-            console.log('tiradaDaus', tiradaDaus); // devuelve array del return
-            console.log(tiradaDaus.resultatJugada); // devuelve array del return
-
-            console.log("nomjugador", jugadorTrobat.nomJugador);
-            console.log("tirades jugador:", jugadorTrobat.tiradesJugador);
 
             await Jugada.create(
                 {
@@ -57,7 +52,6 @@ const crearJugada = async (req, res) => {
                 }
             )
 
-
             const dadesJugador = {
                 'ID Jugador:': jugadorTrobat.idJugador,
                 'Nom Jugador:': jugadorTrobat.nomJugador,
@@ -67,24 +61,12 @@ const crearJugada = async (req, res) => {
                 // "Percentatge d'èxit:": jugadorTrobat.percentatgeExit
             };
 
+            res.status(200).json({"Dades Jugador": dadesJugador})
 
-
-            // const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
-            // const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
-            res.status(200).json(dadesJugador)
-            // res.status(200).send(dadesJugador + missatge)
-                // + missatge);
-
-
-
-
-            // const dadesJugador = `ID Jugador: ${jugadorTrobat.idJugador}  \nNom Jugador: ${jugadorTrobat.nomJugador} \n \n`;
-            // const missatge = ` DAU 1: ${tiradaDaus.tiradaDau1} \n DAU 2: ${tiradaDaus.tiradaDau2} \n Partida guanyada: ${tiradaDaus.resultatJugada}`;
-            // res.status(200).json(dadesJugador + missatge);
         };
 
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({error});
     };
 };
 

@@ -14,7 +14,7 @@ const crearJugador = async (req, res) => {
                 nomJugador: "ANÒNIM"
             });
             console.log("Jugador creat com a 'ANÒNIM'!");
-            res.status(200).json(`Jugador creat com a '${jugadorAnonim.nomJugador}'!`);
+            res.status(200).json({"Jugador:": `Jugador creat com a '${jugadorAnonim.nomJugador}'!`});
 
         } catch (error) {
             res.status(400).json(error);
@@ -31,7 +31,7 @@ const crearJugador = async (req, res) => {
                 });
 
                 console.log("Jugador creat amb èxit");
-                res.status(200).json(`S'ha creat el jugador: ${jugador.nomJugador}`);
+                res.status(200).json({"Jugador:": `S'ha creat el jugador: ${jugador.nomJugador}`});
             };
 
         } catch (error) {
