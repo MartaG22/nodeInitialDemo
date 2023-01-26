@@ -1,51 +1,115 @@
+#     📢📢  Entrega 5.1: XAT  -  amb SOCKET.IO
+---
+## 💬 Descripció:
 
-# Node Initial Project
-
-### Project Structure
-
-Main structure of node.js project. Folders / files:
-
-- <b>\_\_tests__</b>. Tests folder. See [Jest Docs](https://jestjs.io/es-ES/docs/configuration) and [Chai Docs](https://www.chaijs.com/)
-- <b>app</b>:
-    - <b>config</b>
-    - <b>controllers</b>
-    - <b>middlewares</b>
-    - <b>models</b>
-    - <b>routes</b>
-    - <b>helpers</b>
-    - <b>app.js</b>. Entry point.
-- <b>package.json</b>.
-- <b>.env</b>. Environment descriptor. See [dotenv doc](https://www.npmjs.com/package/dotenv).
-
-Extras:
-- <b>.eslintrc</b>. Linter JS, static code analyzer. See [EsLint Docs](https://eslint.org/docs/user-guide/configuring/configuration-files).
-- <b>.prettierignore</b>. Code formatter. See [Prettier Config](https://prettier.io/docs/en/configuration.html) and [Prettier Ignore](https://prettier.io/docs/en/ignore.html).
-- <b>.ecosystem.config.js</b>. Process Manage at runtime. See [PM2 Docs](https://pm2.keymetrics.io/).
-
-### Import project for use with Visual Studio Code
-
-Follow the steps below:
-* Clone the project from the Github Platform. Execute:
-  ```
-  git clone [url project]
-  ```
-* Open the project downloaded.
-  ![Open Project](img/VSC_open.png)
+### Construïm un Xat!!!
 
 
-### Import project for use with WebStorm
 
-Follow the steps below:
-* Clone the project from the Github Platform. Execute:
-  ```
-  git clone [url project]
-  ```
-* Open the project downloaded.
-![Open Project](img/webstorm_open.png)
+Necessitarem socket.io, una biblioteca de JavaScript per a aplicacions web en temps real. Permet la comunicació bidireccional en temps real entre clients i servidors web. Té dues parts: una biblioteca del costat del client que s'executa en el navegador i una biblioteca del costat del servidor per a Node.js. 
 
 
-### Utilities
+## ⭐ Nivell 1:
 
-* [Node Developers Guide](https://nodejs.dev/learn)
-* **.gitignore file** configuration. See [Official Docs](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files).
-* **Git branches**. See [Official Docs](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+Crea una aplicació que mostri una pàgina de login on l'usuari/ària pugui entrar a una sala de xat (el client i el server han d'estar completament separats). Obrint la mateixa URL en una altra finestra del navegador podrem fer login amb un altre usuari/ària. Verifica que estan en la mateixa sala i permet que xategin. Afegeix la possibilitat de crear múltiples sales de xat i gestiona la persistència amb MongoDB (amb Mongoose) o MySQL (amb Sequelize).
+
+
+## ⭐⭐ Nivell 2:
+
+Afegeix autentificació utilitzant Google Token (google-auth-library)
+
+```
+```
+## ⭐⭐⭐ Nivell 3:
+
+Per superar aquest nivell pots afegir diferents opcions:
+
+- Afegeix qualsevol funcionalitat que vegis útil.
+
+- Afegeix la personalització del frontend que vulguis.
+
+- Realitza el frontend amb algun framework (React, Vue, Angular).
+
+- Efectua el projecte amb TypeScript.
+
+
+
+
+##  Per començar!!!  
+
+
+Projecte realitzat amb les següents tecnologies:
+
+- **BACK-END:**    NodeJs - Express - Mongoose - Socket.io 
+- **FRRONT-END:**  HTML  -  CSS  -  JavaScript
+- 
+### 🛠️ Instal·lar:
+
+> **Step 1** - Clonar el projecte:
+```
+https://github.com/MartaG22/nodeInitialDemo/tree/Xat
+
+```
+> **Step 2** - Instal·lar les dependències necessàries:
+> 
+Per poder executar el projecte, hem de tenir dues carpetes:
+- La part del **CLIENT**, corresponent al **FRONT-END**
+- La part del **SERVER**, corresponent al **BACK-END**
+
+
+**PER AL BACK-END:**
+
+S'ha d'accedir a la carpeta **SERVER** del projecte des de la terminal:
+```
+cd SERVER
+npm install
+```
+
+Se'ns instal·laran les següents dependències:
+ - **Express** -- per consumir les REST-API.
+ - **Mongoose** -- com ORM, per poder utilitzar la base de dades de Mongo en nodejs.
+ - **Dotenv** -- ens permet carregar les variables d'entorn
+ - **Cors**  -- per permetre accedir a la part del FRONT-END
+ - **Jsonwebtoken** -- per crear un token de l'usuari
+ - **Bcrypt  /  Bcryptjs** -- per encriptar/desencriptar la contrassenya de l'usuari
+ - **Socket.io** -- ens permet fer la comunicació en temps real, basada en events.
+  
+
+
+**PER AL FRONT-END:**
+
+S'ha d'accedir a la carpeta **CLIENT** del projecte des de la terminal i instal·lar les dependències:
+```
+cd CLIENT
+npm install
+```
+
+Se'ns instal·laran les següents dependències a la part del CLIENT:
+ - **Dotenv** -- ens permet carregar les variables d'entorn
+ - **Express** -- per consumir les REST-API.
+ - **Path**  -- ens pertet controlar les rutes de la part del FRONT-END
+
+
+
+> **Step 3** - Inicialitzar el projecte:
+> 
+S'ha de fer per separat, la part del SERVER i la part del CLIENT, per tant:
+
+- A la terminal del SERVER:
+
+```
+npm start  -->
+
+npm run dev --> 
+
+```
+
+
+- A la terminal del CLIENT:
+
+```
+npm start  -->
+
+npm run dev --> 
+
+```
