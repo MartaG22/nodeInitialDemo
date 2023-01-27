@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const connectDB = () => {
       try {
 
-            const db = `${process.env.DB_TYPE}://${process.env.MONGOOSE_HOST}:${process.env.MONGOOSE_PORT}/${process.env.MONGOOSE_NAME}`;
+            const db = `mongodb://${process.env.MONGOOSE_HOST}:${process.env.MONGOOSE_PORT}/${process.env.MONGOOSE_NAME}`;
             // await mongoose.connect(myDB, {useNewUrlParser: true, useUnifiedTopology: true});
             mongoose.set('strictQuery', true);
             mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
