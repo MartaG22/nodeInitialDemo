@@ -1,6 +1,6 @@
 #     📢📢  Entrega 5.1: XAT  -  amb SOCKET.IO
 ---
-## 💬 Descripció:
+## 📝 Descripció:
 
 ### Construïm un Xat!!!
 
@@ -33,17 +33,17 @@ Per superar aquest nivell pots afegir diferents opcions:
 - Efectua el projecte amb TypeScript.
 
 
+<br></br>
 
-
-##  Per començar!!!  
+#  Per començar!!!  
 
 
 Projecte realitzat amb les següents tecnologies:
 
 - **BACK-END:**    NodeJs - Express - Mongoose - Socket.io 
 - **FRRONT-END:**  HTML  -  CSS  -  JavaScript
-- 
-### 🛠️ Instal·lar:
+<br></br>
+## 🛠️ Instal·lar:
 
 > **Step 1** - Clonar el projecte:
 ```
@@ -59,7 +59,7 @@ Per poder executar el projecte, hem de tenir dues carpetes:
 
 **PER AL BACK-END:**
 
-S'ha d'accedir a la carpeta **SERVER** del projecte des de la terminal:
+S'ha d'accedir a la carpeta **SERVER** del projecte des de la terminal i després instal·lar les dependències:
 ```
 cd SERVER
 npm install
@@ -74,7 +74,14 @@ Se'ns instal·laran les següents dependències:
  - **Bcrypt  /  Bcryptjs** -- per encriptar/desencriptar la contrassenya de l'usuari
  - **Socket.io** -- ens permet fer la comunicació en temps real, basada en events.
   
-
+<br>Executem el comando per inicialitzar el servidor del **SERVER** i la base de dades amb **Mongodb** </br>
+```
+npm start  -->  Per executar el projecte com a usuari
+npm run dev -->  Per executar com a desenvolupador
+```
+El server s'inicialitzarà al PORT 3000.
+<br>
+3
 
 **PER AL FRONT-END:**
 
@@ -91,25 +98,13 @@ Se'ns instal·laran les següents dependències a la part del CLIENT:
 
 
 
-> **Step 3** - Inicialitzar el projecte:
-> 
-S'ha de fer per separat, la part del SERVER i la part del CLIENT, per tant:
+Per inicialitzar el servidor a la part del CLIENT: 
 
-- A la terminal del SERVER:
+
 
 ```
-npm start  -->
-
-npm run dev --> 
-
+npm start  -->  Per executar el projecte
+npm run dev -->  Per executar com a desenvolupador
 ```
-
-
-- A la terminal del CLIENT:
-
-```
-npm start  -->
-
-npm run dev --> 
-
-```
+<br>
+La URL per poder obrir el <b>XAT</b> pel navegador és <b>http://localhost:8080</b>
