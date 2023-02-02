@@ -7,7 +7,7 @@ const initFirstRoom = require("../controllers/room/initRoom.js");
 const createRoom = require("../controllers/room/newRoomController.js");
 const getRooms = require("../controllers/room/getRoomsController.js");
 const joinRoom = require("../controllers/room/joinRoomController.js");
-const sendMessage = require("../controllers/message/sendMessageController.js")
+const sendMessage = require("../controllers/message/messageController.js.js")
 
 // const SocketIO = require("socket.io");
 // const io = SocketIO.listen(server);
@@ -57,16 +57,14 @@ const sockets = async (io) => {
                     // JOIN NEW ROOM:
                     // console.log({msg: 'enterRoom en SOCKETS', room, usuari});  //! comentario de OMAR
                     // console.log ({msg: "enterRoom.room:", enterRoom.usersInThisRoom})
-                    // console.log("enterRoom.currentRoom", enterRoom.currentRoom, "\n \n", "enterRoom.usersInThisRoom", enterRoom.currentRoom.usersInThisRoom);
+                    console.log("enterRoom.currentRoom", enterRoom.currentRoom, "\n \n", "enterRoom.usersInThisRoom", enterRoom.currentRoom.usersInThisRoom);
                     const arrayUsersInRoom = [];
                     enterRoom.currentRoom.usersInThisRoom.forEach((user) => {
                         arrayUsersInRoom.push(user.nomUsuari);
                     });
                     // console.log('arrayUsersInRoom en SOCKETS/JOINROOM', arrayUsersInRoom);
                     const currentUser = usuari.userName;
-                    const previousMessages = enterRoom.currentRoom.message;
-                    console.log("previousMessages:", previousMessages)
-                    io.emit("joinNewRoom", room, arrayUsersInRoom, currentUser, previousMessages);
+                    io.emit("joinNewRoom", room, arrayUsersInRoom, currentUser);
                 } else {
                     //! <<<***>>>   FALTA ACABAR AQUEST CONTROLOADOR  !!!!
                 };

@@ -27,13 +27,13 @@ socket.on('connect', () => {
     // console.log(arrayCurrentRooms)
     
     
-    socket.on('joinNewRoom', async(room, usersInThisRoom, currentUser, previousMessages) => {
-        console.log("Han arribat aquestes dades a CLIENT/JOINNEWROOM:", room, usersInThisRoom, currentUser, previousMessages)
+    socket.on('joinNewRoom', async(room, arrayUsers, currentUser) => {
+        console.log("Han arribat aquestes dades:", room, arrayUsers, currentUser)
         
         // sessionStorage.roomId == data.currentUser.idUsuari;
-        // sessionStorage.roomName == room.id;
+        sessionStorage.roomName == room;
         
-        showUsers(room, usersInThisRoom, currentUser);
+        showUsers(room, arrayUsers, currentUser);
         
 
         //! sessionStorage.roomId === room.roomId;
