@@ -1,20 +1,35 @@
 {
-  "name": "nodeinitialdemo",
+  "name": "app",
   "version": "1.0.0",
-  "description": "sample project for node",
+  "description": "Joc de Daus",
   "main": "app.js",
   "scripts": {
-    "start": "node app/app.js",
-    "dev": "nodemon app/app.js",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mysql": "node  jocDaus_Sequelize/app/app.js",
+    "mongo": "node  jocDaus_Mongoose/app/app.js",
+    "devMysql": "nodemon  jocDaus_Sequelize/app/app.js",
+    "devMongo": "nodemon  jocDaus_Mongoose/app/app.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaG22/nodeInitialDemo.git#jocDaus"
+  },
+  "author": "Marta Garijo",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartaG22/nodeInitialDemo/issues"
+  },
+  "homepage": "https://github.com/MartaG22/nodeInitialDemo/tree/jocDaus#readme",
   "dependencies": {
-    "dotenv": "^9.0.2"
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.7.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.25.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "jest": "^28.1.1"
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
   }
 }
