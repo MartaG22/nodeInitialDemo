@@ -35,6 +35,8 @@ document.querySelector(".entry-form").addEventListener('submit', e => {
           if (data.status === 'ok') {
             //   window.location.replace('./index.html')  //! ???
               window.location.replace('./login.html')
+            //   window.location.assign("../HTML/xat.html");
+
           } else {
               registerError.innerHTML = data.message;
           }
