@@ -6,8 +6,11 @@ const showUsers = (room, usersInThisRoom, currentUser) => {
 
             for (const user of usersInThisRoom) {
                   console.log('USER:', user);
-                  if (user === currentUser){
-                        usersInRoom.innerHTML += `<span style='color:#ff0000;'>${user}</span> <br>`
+                  console.log("SESSIONSTORAGE en PUBLIC/showusers:", sessionStorage)
+                  // if (user === currentUser){
+                  // if (user === currentUser){
+                  if (sessionStorage.userName === user) {
+                        usersInRoom.innerHTML += `<span style='color: rgb(205, 111, 186);'>${user}</span> <br>`
                   } else {
                         usersInRoom.innerHTML += `${user} <br>`
                   }
