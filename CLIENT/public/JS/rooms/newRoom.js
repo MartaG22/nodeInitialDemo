@@ -2,9 +2,7 @@ const joinRoom = (room) => {
       try {
 
             if (sessionStorage.roomName === room.id) return;
-            sessionStorage.roomName = room.id;
-            console.log('sessionStorage ROOM NUEVA:', sessionStorage.roomName)
-            
+            sessionStorage.roomName = room.id;            
             document.getElementById("usersList").innerHTML = "";
 
             //!  AQUÍ HE DE TREURE ELS USUARIS I LA ROOM ANTIGUES I ACTUALITZAR LES DADES D LA NOVA ROOM
@@ -17,10 +15,8 @@ const joinRoom = (room) => {
 
 const showRoom =  (rooms) => {
       try {
-
             const roomList =  document.getElementById("roomList");
             roomList.innerHTML = "";
-
 
             for (const room of rooms) {
                   let btn = `<button class="room-btn-active" id="${room}" onClick="(() => {
