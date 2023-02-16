@@ -6,28 +6,22 @@
 const Usuari = require("../../models/dbUsuari.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-console.log(Usuari);
 
 const userRegister = async (req, res) => {
       try {
             const user = await req.body;
-            console.log("USER", user);
 
             // Comprovem si s'han introduit les dades requerides
             if (!user.userName && !user.password) {
-                  console.log("NO HAS INTRODUIT DADES"); 
                   return res.status(400).send({ status: "fail", message: "Dades introduides no vàlides!!!" });
             } if (!user.userName) {
-                  console.log("USERNAME BUIT");
                   return res.status(400).send({ status: "fail", message: "No és vàlid el NOM D'USUARI" });
             } if (!user.password) {
-                  console.log("PASSWORD BUIT");
                   return res.status(400).send({ status: "fail", message: "No és vàlida la contrasenya" })
             }
 
             // Comprovem si ja està enregistrat el nom introduit
             const userExists = await Usuari.find({nomUsuari: user.userName});
-            console.log("USEREXISTS", userExists)
             if (userExists.length !== 0) {
 
                   //!  S'HA D'ESBORRAR AQUEST MISSATGE DE LA PÀGINA QUAN ESBORRO LES DADES
@@ -35,7 +29,6 @@ const userRegister = async (req, res) => {
 
             } else {
                   const quantitatUsuaris = await Usuari.count({});
-                  console.log('quantitatUsuaris:', quantitatUsuaris);
 
                   //Encriptació del PASSWORD i el guardem encriptat a la Base de Dades
                   const hashedPassword = await bcrypt.hash(user.password, 10);

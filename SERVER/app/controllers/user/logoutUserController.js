@@ -2,8 +2,7 @@ const Usuari = require('../../models/dbUsuari.js');
 const Room = require('../../models/dbRoom.js');
 
 const disconnectUser = async (usuari) => {
-      console.log("USUARI A DESCONNECTAR - en SERVER/DISCTONNECTUSER:", usuari);
-      //! FINS AQUÍ ARRIBA   BÉ    EL USUARI A DESCONNECTAR 
+
       try {
             const findUserInRoom = await Usuari.findOne({ idUsuari: usuari.userId });
             const currentRoom = findUserInRoom.room;
@@ -21,15 +20,12 @@ const disconnectUser = async (usuari) => {
                   });
 
                   newUsersInRoom.forEach(user => {
-                        console.log("user en FOREACH:", user)
                         newArrayUsers.push(user.nomUsuari)
                   })
-                  console.log('newArrayUsers', newArrayUsers)
+
                   await findCurrentRoom.updateOne({ usersInThisRoom: newUsersInRoom });
                   return ({ status: "success", currentRoom, newArrayUsers });
-
             };
-
 
       } catch (error) {
             result = { status: "error", message: error.message }

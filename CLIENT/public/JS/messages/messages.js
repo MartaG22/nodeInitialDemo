@@ -5,12 +5,10 @@ const showMessages = (previousMessages, currentUser, usersInThisRoom) => {
             updateMessages.innerHTML = "";
             
             for (message of previousMessages) {
-                  console.log("MESSAGE:", message);
                   
                   if (currentUser.userName === message.nomUsuari) {
                         updateMessages.innerHTML += `<span style = 'float: right'><strong>${currentUser.userName}: </strong><span style='color:#ff0000;'>${message.missatge} </span> `;
                         updateMessages.innerHTML += '<br>';
-
 
                   } else {
                         updateMessages.innerHTML += `<span style = 'float: left;'><strong>${message.nomUsuari}: </strong>${message.missatge}</span> <br>`;

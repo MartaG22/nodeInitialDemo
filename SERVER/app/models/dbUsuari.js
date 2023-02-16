@@ -9,8 +9,6 @@ const usuari = new Schema(
         nomUsuari: {type: String, required: true, unique: true},
         passwordUsuari: {type: String, required: true},
         room: {type: String},
-        // nickUsuari: {type: String},
-        // emailUsuari: {type: String}
     },
     { timestamps: true }
 );

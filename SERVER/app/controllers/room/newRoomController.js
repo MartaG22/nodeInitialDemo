@@ -10,7 +10,6 @@ const createRoom = async (newRoomName) => {
             return { status: "error", message: "Ja existeix una sala amb aquest nom" };
 
         } else {
-
             const newRoom = await Room.create({roomName: newRoomName.newRoomName});
             return {
                 status:"success",

@@ -10,9 +10,6 @@ document.querySelector(".entry-form").addEventListener('submit', e => {
       const registerError = document.querySelector("#showError");
       const apiUrl = 'http://localhost:3000';
       
-    //   document.getElementById(login-error).innerHTML = "";
-    //   registerError.innerHTML = "";
-      console.log("userName:", userName, "password:", password);
 
       const regex = /\s/;
       if(regex.test(userName)){

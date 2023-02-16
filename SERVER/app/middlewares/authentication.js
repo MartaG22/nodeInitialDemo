@@ -8,8 +8,6 @@ const authentication = async(req, res, next) => {
 
     const user = await req.body;
     console.log('user en authentication:', user)
-    // const userName = req.body.userName;
-    // const password = req.body.password;
      
     // Valida si s'han introduit dades
     if (!user.userName) return res.status(400).json({ status: "fail", message: `username not provided`});
