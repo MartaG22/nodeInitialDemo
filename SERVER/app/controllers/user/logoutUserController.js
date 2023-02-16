@@ -24,7 +24,7 @@ const disconnectUser = async (usuari) => {
                         console.log("user en FOREACH:", user)
                         newArrayUsers.push(user.nomUsuari)
                   })
-
+                  console.log('newArrayUsers', newArrayUsers)
                   await findCurrentRoom.updateOne({ usersInThisRoom: newUsersInRoom });
                   return ({ status: "success", currentRoom, newArrayUsers });
 
