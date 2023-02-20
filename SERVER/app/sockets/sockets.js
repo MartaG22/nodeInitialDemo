@@ -76,6 +76,7 @@ const sockets = async (io) => {
                 if (createNewRoom.status === "success"){
                     const room =  createNewRoom.newRoom.roomName;
                     const joinNewRoom = await joinRoom2(room, usuari);
+                    console.log(joinNewRoom)
 
                     if (joinNewRoom.status === "success") {
                         const arrayUsersInRoom =  [usuari.userName];

@@ -11,6 +11,15 @@ const joinRoom2 = async (room, usuari) => {
                   };
 
                   const usersInCurrentRoom = [currentUser];
+                  const findUserInRoom = usersInCurrentRoom.find(user => (user.idUsuari === currentUser.idUsuari && user.nomUsuari === currentUser.nomUsuari));
+                  console.log('findUserInRoom', findUserInRoom);
+
+                  if (findUserInRoom) {
+                        console.log("Aquest USUARI ja està connectat a aquesta ROOM");
+                        return { status: "success",  currentRoom };
+
+                  };
+
                   await currentRoom.updateOne({
                         usersInThisRoom: usersInCurrentRoom,
                   });
@@ -40,7 +49,8 @@ const joinRoom = async (room, usuari) => {
                   const findUserInRoom = usersInCurrentRoom.find(user => (user.idUsuari === currentUser.idUsuari && user.nomUsuari === currentUser.nomUsuari));
 
                   if (findUserInRoom) {
-                        return { status: "error", message: "Aquest USUARI ja està connectat a aquesta ROOM" };
+                        // return { status: "error", message: "Aquest USUARI ja està connectat a aquesta ROOM" };
+                        return { status: "success",  currentRoom };
                   };
 
                   usersInCurrentRoom.push(currentUser);
