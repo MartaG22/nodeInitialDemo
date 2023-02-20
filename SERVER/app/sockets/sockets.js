@@ -4,7 +4,7 @@ const disconnectUser = require("../controllers/user/logoutUserController.js");
 const initFirstRoom = require("../controllers/room/initRoom.js");
 const createRoom = require("../controllers/room/newRoomController.js");
 const getRooms = require("../controllers/room/getRoomsController.js");
-const joinRoom = require("../controllers/room/joinRoomController.js");
+const joinRoom2 = require("../controllers/room/joinRoomController.js");
 const getUsersRoom = require("../controllers/user/getUsersController.js")
 const sendMessage = require("../controllers/message/sendMessageController.js");
 const getDataRoom = require("../controllers/room/getDataRoom.js");
@@ -40,15 +40,12 @@ const sockets = async (io) => {
         };
 
 
-        // Inicialitzem la Primera Sala (PANGEA)
-
         initFirstRoom();
 
 
 
         socket.on("changeRoom", async (room) => {
             try {
-
                 let changeUserRoom = await changeRoom(room, usuari);
                 if (changeUserRoom.status === "success") {
 
@@ -56,39 +53,34 @@ const sockets = async (io) => {
                     changeUserRoom.findNewRoom.usersInThisRoom.forEach((user) => {
                         arrayUsersInRoom.push(user.nomUsuari);
                     });
-
                     const previousMessages = changeUserRoom.findNewRoom.message;
+
                     io.emit("joinRoom", room, arrayUsersInRoom, usuari.userName, previousMessages);
-
-                }
-
+                
+                };
 
             } catch (error) {
                 return { status: "error", message: error };
             };
-        })
+        });
 
-        socket.on("newRoom", async (newRoomName) => {
+
+
+        socket.on("newRoom", async(newRoomName) => {
+
             try {
-                let createNewRoom = await createRoom({ newRoomName });
-                const arrayUsersInThisRoom = [];
-                const previousMessages = [];
-                let newRoom, currentUser;
+                const createNewRoom = await createRoom({newRoomName, usuari});
+                
+//! PARA QUE NO ME REPITA EL NOMBRE Y NO GRABE EN LA NEW ROOM EL NOMBRE DEL USUARIO , LO TENGO QJE BORRRAR DE JOINROOM2
 
-                if (createNewRoom.status === "success") {
-                    const room = createNewRoom.newRoom.roomName;
-                    const joinNewRoom = await joinRoom(room, usuari);
+                if (createNewRoom.status === "success"){
+                    const room =  createNewRoom.newRoom.roomName;
+                    const joinNewRoom = await joinRoom2(room, usuari);
 
                     if (joinNewRoom.status === "success") {
-                        
-                        arrayUsersInThisRoom.push(usuari.userName);
-                        console.log("msg:", "ROOOM:", createNewRoom.newRoom.roomName, "array:", arrayUsersInThisRoom, usuari.userName, 'MENSAJES PREVIOS:', previousMessages)
-                        newRoom = createNewRoom.newRoom.roomName;
-
-                        console.log("msg:", "ROOOM:", newRoom, "array:", arrayUsersInThisRoom, usuari, 'MENSAJES PREVIOS:', previousMessages)
-                        io.emit("joinNewRoom", newRoom, arrayUsersInThisRoom, usuari)
-
-                    }
+                        const arrayUsersInRoom =  [usuari.userName];
+                        io.emit('userNewRoom', room, arrayUsersInRoom, usuari);
+                    };
                 };
             } catch (error) {
                 return { status: "error", message: error };
@@ -97,8 +89,11 @@ const sockets = async (io) => {
 
 
 
+
+
+
         socket.on("getRooms", async () => {
-            // initRoom();
+
             try {
                 let currentCreatedRooms = await getRooms();
                 let countRooms = currentCreatedRooms.currentRooms.length;
@@ -109,28 +104,25 @@ const sockets = async (io) => {
                         let roomName =
                             currentCreatedRooms.currentRooms[i].roomName;
                         arrayCurrentRooms.push(roomName);
-                    }
+                    };
 
                     io.to(socket.id).emit("newRoom", arrayCurrentRooms);
                 } else {
                     io.to(socket.id).emit("error", currentCreatedRooms.error);
-                }
+                };
             } catch (error) {
                 return { status: "error", message: error };
-            }
+            };
         });
 
 
         socket.on('newMessage', async (newMessage, room) => {
-
             try {
-
                 const sendNewMessage = await sendMessage(newMessage, usuari, room.roomName);
 
                 if (sendNewMessage) {
                     const arrayUsersInRoom = await getUsersRoom(room.roomName);
                     io.emit("sendMessage", sendNewMessage, usuari, room.roomName, arrayUsersInRoom);
-
                 };
 
             } catch (error) {
@@ -140,21 +132,28 @@ const sockets = async (io) => {
 
 
 
+
+
+
+
         socket.on("disconnect", async () => {
             try {
                 let getUsersRoom = await disconnectUser(usuari);
 
                 if (getUsersRoom.status === "success") {
 
+                    socket.leave(getUsersRoom.currentRoom)
                     io.emit("updateUsersInRoom", getUsersRoom.currentRoom, getUsersRoom.newArrayUsers, usuari.userName);
+                    socket.broadcast.to(getUsersRoom.currentRoom).emit('newDataMessage', message = `${usuari.userName} left the room`);
+                    socket.broadcast.to(getUsersRoom.currentRoom).emit('newDataMessage', usuari.userName);
 
                 } else {
                     return { status: "error", message: "No s'ha detectat la desconnexió del client" }
-                }
+                };
 
             } catch (error) {
                 result = { status: "error", message: error.message }
-            }
+            };
         });
     });
 };

@@ -2,7 +2,6 @@ const Usuari = require('../../models/dbUsuari.js');
 const Room = require('../../models/dbRoom.js');
 
 const disconnectUser = async (usuari) => {
-
       try {
             const findUserInRoom = await Usuari.findOne({ idUsuari: usuari.userId });
             const currentRoom = findUserInRoom.room;

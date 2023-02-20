@@ -4,7 +4,6 @@ const Room = require('../../models/dbRoom.js');
 const initFirstRoom = async () => {
       let firstRoom = "Main"
       const findRoom = await Room.findOne({ roomName: firstRoom });
-      console.log(findRoom);
 
       if (!findRoom) {
             await Room.create({ roomName: firstRoom });

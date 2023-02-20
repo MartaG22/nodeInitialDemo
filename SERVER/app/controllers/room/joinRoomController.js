@@ -1,10 +1,32 @@
 const Room = require("../../models/dbRoom.js");
 const Usuari = require("../../models/dbUsuari.js");
-// const getUsers = require("../models/dbUsuari.js");
+
+const joinRoom2 = async (room, usuari) => {
+      try {
+            const currentRoom = await Room.findOne({ roomName: room });
+            if (currentRoom) {
+                  const currentUser = {
+                        idUsuari: usuari.userId,
+                        nomUsuari: usuari.userName,
+                  };
+
+                  const usersInCurrentRoom = [currentUser];
+                  await currentRoom.updateOne({
+                        usersInThisRoom: usersInCurrentRoom,
+                  });
+
+                  await Usuari.findOneAndUpdate({ idUsuari: currentUser.idUsuari }, { room: currentRoom.roomName });
+                  return { status: "success",  currentRoom };
+            };
+
+      } catch (error) {
+            return { status: "error", message: error };
+      };
+};
+
 
 
 const joinRoom = async (room, usuari) => {
-
       try {
             const currentRoom = await Room.findOne({ roomName: room });
 
@@ -22,8 +44,6 @@ const joinRoom = async (room, usuari) => {
                   };
 
                   usersInCurrentRoom.push(currentUser);
-
-
                   await currentRoom.updateOne({
                         usersInThisRoom: usersInCurrentRoom,
                   });
@@ -37,7 +57,7 @@ const joinRoom = async (room, usuari) => {
 
       } catch (error) {
             return { status: "error", message: error };
-      }
+      };
 };
 
-module.exports = joinRoom;
+module.exports = joinRoom2;
