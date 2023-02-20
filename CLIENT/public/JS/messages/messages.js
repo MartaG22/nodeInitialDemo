@@ -1,53 +1,71 @@
-const showMessages = (previousMessages, currentUser, usersInThisRoom) => {
+const showMessages = async (room, previousMessages, currentUser, usersInThisRoom) => {
       try {
 
             const updateMessages = document.getElementById("oldMessages");
-            updateMessages.innerHTML = "";
-            
-            for (message of previousMessages) {
-                  
-                  if (currentUser.userName === message.nomUsuari) {
-                        updateMessages.innerHTML += `<span style = 'float: right'><strong>${currentUser.userName}: </strong><span style='color:#ff0000;'>${message.missatge} </span> `;
-                        updateMessages.innerHTML += '<br>';
 
-                  } else {
-                        updateMessages.innerHTML += `<span style = 'float: left;'><strong>${message.nomUsuari}: </strong>${message.missatge}</span> <br>`;
+            if (sessionStorage.roomName === room) {
+
+                  updateMessages.innerHTML = "";
+                  for (message of previousMessages) {
+
+                        if (sessionStorage.userName === message.nomUsuari) {
+                              updateMessages.innerHTML += `<br><span style = 'float: right'><strong>${message.nomUsuari}: </strong><span>${message.missatge} </span>`;
+
+                        } else {
+                              updateMessages.innerHTML += `<br><span style = 'float: left;'><strong>${message.nomUsuari}: </strong><span>${message.missatge}</span> <br>`;
+                        };
                   };
             };
+
       } catch (error) {
             return { status: "error", message: error };
-      }
+      };
 };
 
 const sendMessage = async () => {
       try {
             const newMessageUser = document.querySelector('.xatForm input[name="newMessage"]').value;
             document.querySelector('.xatForm input[name="newMessage"]').value = ""
-            const room = {roomName: sessionStorage.roomName};
-            
+
+            const room = { roomName: sessionStorage.roomName };
+
             if (newMessageUser) {
                   socket.emit("newMessage", newMessageUser, room);
-            }
+            };
 
       } catch (error) {
             return { status: "error", message: error };
-      }
+      };
 };
+
 
 
 const showNewMessage = async (newMessage, currentUser, room) => {
       try {
             const updateMessages = document.getElementById("oldMessages");
 
-            if (sessionStorage.userId == newMessage.idUsuari) {
-                  updateMessages.innerHTML += `<br><span  style = 'float: right;'><strong> ${newMessage.nomUsuari}: </strong><span style='color: #822252;'>${newMessage.missatge} </span> `;
+            if (sessionStorage.roomName === room) {
 
-            } else {
-                  updateMessages.innerHTML += `<br><span style = 'float:left;'><strong>${newMessage.nomUsuari}: </strong>${newMessage.missatge} </span>`;
-
+                  if (sessionStorage.userId == newMessage.idUsuari) {
+                        updateMessages.innerHTML += `<br><span  style = 'float: right;'><strong> ${newMessage.nomUsuari}: </strong><span style='color: #822252;'>${newMessage.missatge} </span> `;
+                  } else {
+                        updateMessages.innerHTML += `<br><span style = 'float:left;'><strong>${newMessage.nomUsuari}: </strong><span>${newMessage.missatge} </span><br>`;
+                  };
             };
-            
       } catch (error) {
             return { status: "error", message: error };
-      }
-}
+      };
+};
+
+
+
+const showDataMessage = (message) => {
+      document.getElementById('notificationRoom').removeAttribute('id');
+      console.log(message)
+      const updateMessage = document.getElementById("notificationRoom");
+      updateMessage.innerHTML += message;
+      setTimeout(() => {
+            updateMessage.innerHTML = updateMessage.innerHTML.replace(message, "");
+      }, 5000); 
+
+};

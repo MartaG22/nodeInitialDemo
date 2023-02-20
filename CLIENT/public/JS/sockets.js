@@ -6,10 +6,6 @@ const socket = io('http://localhost:3000', {
 });
 
 let socketConnected = false;
-console.log('sessionStorage.token:', sessionStorage.token)
-console.log('sessionStorage.token:', sessionStorage)
-
-
 
 socket.on('connect', async () => {
 
@@ -19,35 +15,31 @@ socket.on('connect', async () => {
 
     await socket.emit("getRooms");
 
-
-
-    socket.on('joinNewRoom',  async (room, usersInThisRoom, currentUser) => {
-
-        console.log("HHHHHHHHHHHHOOOOOOOOOOOOLLLLLLLLLLAAAAAAAA");
-        // console.log(room, usersInThisRoom, currentUser)
-        
-        console.log("Han arribat aquestes dades a CLIENT/JOINNEWROOM:", room, usersInThisRoom, currentUser);
-
-        await showUsers(room, usersInThisRoom, currentUser.userName);        
-        
+    socket.on('showRooms', (arrayCurrentRooms) => {
+        showRoom(arrayCurrentRooms);
     });
-    
 
-    socket.on("joinRoom",  async (room, usersInThisRoom, currentUser, previousMessages) => {
-        
-        await showUsers(room, usersInThisRoom, currentUser.userName);
-        await showMessages(previousMessages, currentUser, usersInThisRoom);
-
+    socket.on('newDataMessage', (message) => {
+        showDataMessage(message);
     })
-        
+
+    socket.on('userNewRoom', (room, arrayUsersInRoom, usuari) => {
+        showNewRoom(room);
+        showUsers(room, arrayUsersInRoom, usuari.userName);
+        showUserNewRoom(room, usuari);
+    });
+
+    socket.on("joinRoom", async (room, usersInThisRoom, currentUser, previousMessages) => {
+        showUsers(room, usersInThisRoom, currentUser);
+        await showMessages(room, previousMessages, currentUser, usersInThisRoom);
+    })
 
     socket.on("updateUsersInRoom", (room, arrayUsers, usuari) => {
-        showUsers(room, arrayUsers, usuari); //PONERLO BIEN
+        showUsers(room, arrayUsers, usuari); 
     })
 
-
-    socket.on('sendMessage', (newMessage, usuari, room, arrayUsersInRoom) => {
-        showNewMessage(newMessage, usuari, room);
+    socket.on('sendMessage', async (newMessage, usuari, room, arrayUsersInRoom) => {
+        await showNewMessage(newMessage, usuari, room);
     })
 
 })

@@ -9,7 +9,6 @@ document.querySelector(".entry-form").addEventListener('submit', e => {
       const rePassword = document.querySelector('.entry-form [name="repassword"]').value;
       const registerError = document.querySelector("#showError");
       const apiUrl = 'http://localhost:3000';
-      
 
       const regex = /\s/;
       if(regex.test(userName)){
